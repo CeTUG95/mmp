@@ -132,7 +132,7 @@ function setGammaCorrection(iOutput, iInput, comp) {
 		iOutput[i] = 255 * Math.pow((iInput[i] / 255),gammakompress) // iInput[i]; // Red 
 		iOutput[i + 1] = 255 * Math.pow((iInput[i + 1] / 255),gammakompress) // iInput[i + 1]; // Green
 		iOutput[i + 2] = 255 * Math.pow((iInput[i + 2] / 255),gammakompress) // iInput[i + 2]; // Blue 
-		iOutput[i + 3] = 255; // Transparenz des kleinen videos 
+		iOutput[i + 3] = 255; // Transparenz
 	}
 }
 
