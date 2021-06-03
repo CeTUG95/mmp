@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<title>Video&Audio: Player and Genarator</title>
+
+
+<style>
+#canvasID {
+
+
+
+}
+
+#videoID {
+
+}
+#customCanvas {
+	border: 1px solid #999;
+	padding: 5px;
+	background-color: #dedede;
+}
+
+#i1, #i2, #i3, #h1, #h2 {
+	position: absolute;	
+	bottom: 10px;
+        top: 3px;
+	
+	width: 210px;
+	height:60px;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+}
+
+#h1 {	
+	left: 900px;
+	width: 260px;
+	height:10px;
+}
+
+#h2 {	
+	left: 1100px;
+	width: 460px;
+	height:10px;
+}
+/* ---------------------------------------Menue-------------------------------------- */
+* {
+ /* box-sizing: border-box;*/   
+}
+
+body {
+  margin: 0;
+}
+
+.navbar {
+  height: 25px;
+  overflow: hidden;
+  background-color: #2bb5b2;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  height: 15px;
+  color: white;
+  text-align: center;
+  padding: 4px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {  
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 4px 16px;
+  background-color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top:20px;  
+  background-color: #f9f9f9;
+  width: 100%;
+  left: 0;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content .header {
+  background: red;
+  padding: 6px;
+  color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Create five   equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 20%;
+  padding: 2px;
+  background-color: #ccc;
+  height: 650px;
+}
+
+.column a {
+  float: none;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.column a:hover {
+  background-color: #92d8d6;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#meta{
+	position: absolute;
+	top: 80px;
+	left:40px;
+	  background-color: #ccc;
+}
+</style>
+
+<script src='js/WebGLjs/three-min.js'></script>
+<script src='js/WebGLjs/threex.text.js'></script>
+<script src="js/WebGLfonts/droid/droid_serif_bold.typeface.js"></script>
+<body onload="init()">
+     <header>
+
+
+<div id = "naviBar"class="navbar">
+  <a href="#home" onclick="showMenueHome();">Home</a>   
+
+ 
+
+</div> 
+   
+
+	 <h3 id="h1">App Übung</h3> 
+	 <h4 id="h2">Kapitel: Übung1 - Signale</h4> 
+  <form id="meta" style="visibility:hidden">   
+  </form > 
+   </header>    
+  
+
+<div>
+<input type="button" id="playVideoAudio" onclick="toggleplay()" value="Play/Pause" >
+
+ 
+<input type="button" id="Log" onclick="drawLog()" value="Log">
+</div>
+<div>
+<label id="labelIn1"> In1 </label><input type="text" size="3" id="In1" value="150">
+<label id="labelIn2"> In2 </label><input type="text" size="3" id="In2" value="150">
+<label id="labelIn3"> In3 </label><input type="text" size="3" id="In3" value="40">
+<label id="labelIn4"> In4 </label><input type="text" size="3" id="In4" value="10">
+<label id="labelIn5"> In5 </label><input type="text" size="3" id="In5" value="10">
+<label id="labelIn6"> In6 </label><input type="text" size="3" id="In6" value="10">
+
+</div>
+
+<video id="videoID" preload="auto" loop width="720" height="404">
+</video>
+<audio id="audioID" preload="auto" loop >
+</audio>
+<canvas id=canvasID></canvas>
+<canvas id=canvasID2></canvas>
+
+
+<div>
+<canvas id="customCanvas" width="10" height="10"></canvas>
+</div>
+<pre id="preLog"></pre>
+
+<a href="https://141.64.64.17/web/html5/video/measurement/0_Measurement17.html"  onclick="window.open('https://141.64.64.17/web/html5/video/measurement/0_Measurement17.html', 'newwindow', 'width=980, height=800'); return false;"> Measurment Video</a>
+<a href="https://141.64.64.17/web/html5/audio/measurement/0_Measurement17.html"  onclick="window.open('https://141.64.64.17/web/html5/audio/measurement/0_Measurement17.html', 'newwindow', 'width=980, height=800'); return false;"> Measurment Audio</a>
+<a href="https://141.64.64.206/dozweb/demo/html5/video/1_measurement_screen_v2/0_Measurement17.html"  onclick="window.open('https://141.64.64.206/dozweb/demo/html5/video/1_measurement_screen_v2/0_Measurement17.html', 'newwindow', 'width=980, height=800'); return false;"> Measurment Video</a>
+<a href="https://141.64.64.206/dozweb/demo/html5/audio/1_measurment_micro_v2/0_Measurement17.html"  onclick="window.open('https://141.64.64.206/dozweb/demo/html5/audio/1_measurment_micro_v2/0_Measurement17.html', 'newwindow', 'width=980, height=800'); return false;"> Measurment Audio</a>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/processing_part1.js"></script>
+<script type="text/javascript" src="js/processing_part2.js"></script>
+<script type="text/javascript" src="js/processing_part3.js"></script>
+<script type="text/javascript" src="js/processing_part4.js"></script>
+<script type="text/javascript" src="js/processing_part10.js"></script>
+
+
+
+
+<script src="js/FFT2D.js"></script>
+<script src="js/FFT1D.js"></script>
+<script src="js/WT2.js"></script>
+
+</body>
+</html>

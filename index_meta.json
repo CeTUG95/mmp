@@ -1,0 +1,683 @@
+{
+   "file": "Demo_VirtuellesStudio.mp4",
+    "title": "Grundlagen der Medientechnik",  
+    "author": "Juergen Lohr",
+    "date": "20.April.2020",
+    "description": "Grundlagen der Medientechnik virtuellen Lehre", 
+	"keywords": [ 
+        "Beuth",
+        "Medientechnik",
+        "Lohr",
+        "Audio",
+		"Video"
+    ],
+    "speaker": [
+        "Juergen Lohr"
+    ],
+    "camera": [
+        "Juergen Lohr"
+    ],
+	"audioCapture": [
+        "Juergen Lohr"
+    ],
+    "license": "Beuth-HS",
+    "attribution": "https://www.beuth-hochschule.de/",
+    "input": [
+        {
+            "format": "MPEG-4",
+            "duration": 132,
+            "start": 0.529978,
+            "bitrate": 1440000, 
+            "streams": [
+                {
+                    "type": "video",
+                    "codec": "avc1",
+                    "pixel": "yuv420p",
+                    "width": "1280,max 1920, min 420",
+                    "height": 720,
+                    "ratio": 1,
+                    "fps": 25,
+                    "bitrate": 1300000
+                },
+                {
+                    "type": "audio",
+                    "codec": "AAC",
+                    "sampleRate": 48000,
+                    "channels": 2,
+                    "bitrate": 128000,
+                    "language": "de"
+                }
+            ]
+        }  
+    ],  
+   "book": [
+        {
+
+            "info": "Audio - Grundlagen", 
+            "struct": [
+		{  
+		"chap": "Default - Vorgaben",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Default - Vorgaben",  
+		"theme": "Gen Rauschen",
+		"themeLong": "Übung0: A-Generator - Default Rauschen",
+		"processNr": "u10.1"
+		},	 	{	
+		"chap": "Default - Vorgaben",  
+		"theme": "Aud Channel",
+		"themeLong": "Übung0: Audio - Default Channel (R/L/Mono)",
+		"processNr": "u10.2"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Übung 1 - Signale",  
+		"theme": "Gen Sinus",
+		"themeLong": "Übung1: A-Generator - Sinus",
+		"processNr": "u11.1"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Mono",
+		"themeLong": "Übung1: Audio - Mono",
+		"processNr": "u11.2"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Perception Trans",
+		"themeLong": "Übung1: Audio - Perception MixingLevel",
+		"processNr": "u11.10"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Perception Time",
+		"themeLong": "Übung1: Audio - Perception Time",
+		"processNr": "u11.11"
+		},	 	{	
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen Klang",
+		"themeLong": "Übung2: A-Generator - Klang",
+		"processNr": "u12.1"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Volume",
+		"themeLong": "Übung2: Audio - Volume",
+		"processNr": "u12.2"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen - Delay",
+		"themeLong": "Übung2: A-Generator - Delay",
+		"processNr": "u12.3b"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Delay",
+		"themeLong": "Übung2: Audio - Delay",
+		"processNr": "u12.3"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Delay16k",
+		"themeLong": "Übung2: Audio - Delay16k",
+		"processNr": "u12.3a"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen TP1O",
+		"themeLong": "Übung2: A-Generator - TP1O",
+		"processNr": "u12.4"
+		}, 		{
+		"chap": "Übung 2HP1O- Bearbeitung",  
+		"theme": "Gen HP1O",
+		"themeLong": "Übung2: A-Generator - HP1O",
+		"processNr": "u12.5"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen TP2O - Visuell",
+		"themeLong": "Übung2: A-Generator - TP2O",
+		"processNr": "u12.6"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen HP2O",
+		"themeLong": "Übung2: A-Generator - HP2O",
+		"processNr": "u12.7"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen BP2O",
+		"themeLong": "Übung2: A-Generator - BP2O",
+		"processNr": "u12.8"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen BS2O",
+		"themeLong": "Übung2: A-Generator - BS2O",
+		"processNr": "u12.9"
+		}, 		{
+    	"chap": "Übung 3 - Kompression", 
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		},		{ 
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Gen Delta",
+		"themeLong": "Übung3: A-Generator - Deltakompression",
+		"processNr": "u13.1"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Aud Delta",
+		"themeLong": "Übung3: Audio - Deltakompression",
+		"processNr": "u13.2"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Gen Subband",
+		"themeLong": "Übung3: A-Generator - Subband",
+		"processNr": "u13.3"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Aud Subband",
+		"themeLong": "Übung3: Audio - Subbandkompression",
+		"processNr": "u13.4"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Gen FFT",
+		"themeLong": "Übung3: A-Generator - oneHz4 - FFT-Kompression",
+		"processNr": "u13.5"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Aud  FFT 16384/2",
+		"themeLong": "Übung3: Audio - Audio16384/2 - FFT-Kompressionn",
+		"processNr": "u13.6"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Gen  FFT WhiteNoise",
+		"themeLong": "Übung3: A-Generator - WhiteNoise - FFT-Kompression",
+		"processNr": "u13.5a"
+		}
+
+            ]
+        } ,
+        {
+
+            "info": "Video - Grundlagen", 
+            "struct": [
+		{  
+		"chap": "Default - Vorgaben",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Default - Vorgaben",  
+		"theme": "Gen rote Fläche",
+		"themeLong": "Übung0: V-Generator - Default  rote Fläche",
+		"processNr": "u0.1"
+		},	 	{	
+		"chap": "Default - Vorgaben",  
+		"theme": "Vid Channel(R/G/B)",
+		"themeLong": "Übung0: Video - Default Channel(R/G/B) Video",
+		"processNr": "u0.2"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Übung 1 - Signale",  
+		"theme": "Gen Colour Area",
+		"themeLong": "Übung1: V-Generator - Colour Area",
+		"processNr": "u1.1"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Vid Bridness",
+		"themeLong": "Übung1: Video - Bridness Video",
+		"processNr": "u1.2"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Vid Perception Trans",
+		"themeLong": "Übung1: Video - Perception Transparency",
+		"processNr": "u1.10"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Vid Perception Time",
+		"themeLong": "Übung1: Video - Perception Time",
+		"processNr": "u1.11"
+		},	 	{	
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen Cosinus",
+		"themeLong": "Übung2: V-Generator - Cosinus",
+		"processNr": "u2.1"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid Contrast",
+		"themeLong": "Übung2: Video - Contrast",
+		"processNr": "u2.2"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid Cromakey",
+		"themeLong": "Übung2: Video - Cromakey",
+		"processNr": "u2.3"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen Cos64 - TP1O",
+		"themeLong": "Übung2: V-Generator Cos64 - TP1O",
+		"processNr": "u2.4a"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid TP1O",
+		"themeLong": "Übung2: Video - TP1O",
+		"processNr": "u2.4"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen Cosinus",
+		"themeLong": "Übung2: V-Generator Cos64  - HP1O",
+		"processNr": "u2.5b"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid HP1O - Visuell",
+		"themeLong": "Übung2: Video - HP1O - Visuell",
+		"processNr": "u2.5a"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid HP1O",
+		"themeLong": "Übung2: Video - HP1O",
+		"processNr": "u2.5"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid TP2O",
+		"themeLong": "Übung2: Video - TP2O",
+		"processNr": "u2.6"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid HP2O",
+		"themeLong": "Übung2: Video - HP2O",
+		"processNr": "u2.7"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid Sobelfilter",
+		"themeLong": "Übung2: Video - Sobelfilter",
+		"processNr": "u2.8"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		},		{ 
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Gen Delta",
+		"themeLong": "Übung3: V-Generator - Deltakompression",
+		"processNr": "u3.1"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Vid Delta",
+		"themeLong": "Übung3: Video - Deltakompression",
+		"processNr": "u3.2"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Gen Subband",
+		"themeLong": "Übung3: V-Generator - Subband",
+		"processNr": "u3.3"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Vid Subband",
+		"themeLong": "Übung3: Video - Subbandkompression",
+		"processNr": "u3.4"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Gen 4x4 - FFT",
+		"themeLong": "Übung3: V-Generator - oneHz4x4 - FFT-Kompression",
+		"processNr": "u3.5"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Pic 4x4 - FFT",
+		"themeLong": "Übung3: V-Generator - picture4x4 - FFT-Kompression",
+		"processNr": "u3.6"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Vid 128x128 FFT",
+		"themeLong": "Übung3: Video - video128x128 - FFT-Kompression",
+		"processNr": "u3.7"
+		}
+           ]
+        } 	,
+        {
+
+            "info": "Audio-Vertiefung", 
+            "struct": [
+		{  
+		"chap": "Default - Vorgaben",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Default - Vorgaben",  
+		"theme": "MessCanvas Text",
+		"themeLong": "Übung0: MessCanvas - Text & Punkte",
+		"processNr": "u10.3"
+		},	 	{	
+		"chap": "Default - Vorgaben",  
+		"theme": "MessCanvas Linien",
+		"themeLong": "Übung0: MessCanvas- Linien",
+		"processNr": "u10.4"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Übung 1 - Signale",  
+		"theme": "Gen Gleitton",
+		"themeLong": "Übung1: A-Generator - 1 Gleitton",
+		"processNr": "u14.1"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Panning",
+		"themeLong": "Übung1: Audio - 2 Stereo-Panning",
+		"processNr": "u14.2"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Perception Pegel",
+		"themeLong": "Übung1: Audio - 3 Wahrnehmungsanalyse: Lautstärke",
+		"processNr": "u14.3"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Measurment Pegel",
+		"themeLong": "Übung1: Audio - 4a Measurment: Lautstärkepegel",
+		"processNr": "u14.4"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Measurment Waveform",
+		"themeLong": "Übung1: Audio - 4b Measurment: Waveform",
+		"processNr": "u14.4b"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Measurment Histogram",
+		"themeLong": "Übung1: Audio - 4a Measurment: Histogram",
+		"processNr": "u14.4c"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "Aud Capture Input",
+		"themeLong": "Übung1: Audio - 5 Capture-Eingang mit WEBRTC",
+		"processNr": "u14.5"
+		},	 	{	
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen Kompressor",
+		"themeLong": "Übung2: A-Generator - 6a Kompressor",
+		"processNr": "u14.6"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Kompressor",
+		"themeLong": "Übung2: Audio - 6b Kompressor",
+		"processNr": "u14.6b"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Gen Enhancer",
+		"themeLong": "Übung2: A-Generator - 7a Enhancer",
+		"processNr": "u14.7"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Enhancer",
+		"themeLong": "Übung2: Audio - 7a Enhancer",
+		"processNr": "u14.7b"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Delay Loop",
+		"themeLong": "Übung4: Audio - 8 Delay - Time Feedbackloop",
+		"processNr": "u14.8"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Analyse Pegel-Dif",
+		"themeLong": "Übung2: Audio - 9 Analyse Delaybuffer Pegel-Dif",
+		"processNr": "u14.9"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Analyse Sampl-Dif",
+		"themeLong": "Übung2: Audio - 10 Analyse Buffer Sampl-Differenz",
+		"processNr": "u14.10"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud Analyse Sample",
+		"themeLong": "Übung2: Audio - 11 Analyse Buffer Sample",
+		"processNr": "u14.11"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud - 12 leer",
+		"themeLong": "Übung2: Audio - 12",
+		"processNr": "u14.12"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud - 12 leer",
+		"themeLong": "Übung2: Audio - 13",
+		"processNr": "u14.13"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Aud - 12 leer",
+		"themeLong": "Übung2: Audio - 14",
+		"processNr": "u14.14"
+		}, 		{
+		"chap": "Übung 3 -  Kompression", 
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		},		{ 
+		"chap": "Übung 10 - Kompression", 
+		"theme": "Aud FFT Masking 1Frame",
+		"themeLong": "Übung10: Audio - 12 FFT-Measurment 5 Bearbeitung Masking Freq 1Frame",
+		"processNr": "u110.12"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Aud FFT Bearbeitung 2Frames",
+		"themeLong": "Übung10: Audio - 13 FFT-Measurment 6 Bearbeitung 2Frames  Schwelle-Dif + Schwellwert",
+		"processNr": "u110.13"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Aud FFT Bearbeitung 3Frames",
+		"themeLong": "Übung10: Audio - 14a FFT-Measurment 7 Bearbeitung 3Frames  Schwelle-Dif + Schwellwert Red",
+		"processNr": "u110.14"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Aud FFT Bearbeitung 3Frames 2",
+		"themeLong": "Übung10: Audio - 14b FFT-Measurment 7 Bearbeitung 3Frames  Schwelle-Dif + Schwellwert Blue",
+		"processNr": "u110.14b"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Aud FFT Masking 3Frames",
+		"themeLong": "Übung10: Audio - 15 FFT-Measurment 8 Bearbeitung Masking Time 3Frames",
+		"processNr": "u110.15"
+		}, 		{
+  		"chap": "Übung 10 - Kompression Wavelet", 
+		"theme": "Gen Wavelet Measurment",
+		"themeLong": "Übung10: A-Generator - 20 Wavelet-Measurment 1 Sinus0.1/1/10k",
+		"processNr": "u110.20"
+		}, 		{
+		"chap": "Übung 10 - Kompression", 
+		"theme": "Aud Wavelet Measurment",
+		"themeLong": "Übung10: Audio - 21 Wavelet-Measurment 1",
+		"processNr": "u110.21"
+		}
+           ]
+        } 	,
+        {
+
+            "info": "Video-Vertiefung", 
+            "struct": [
+		{  
+		"chap": "Default - Vorgaben",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Default - Vorgaben",  
+		"theme": "MessCanvas Graph",
+		"themeLong": "Übung0: MessCanvas - Graph",
+		"processNr": "u0.3"
+		},	 	{	
+		"chap": "Default - Vorgaben",  
+		"theme": "MessCanvas Pic",
+		"themeLong": "Übung0: MessCanvas- Pic",
+		"processNr": "u0.4"
+		},	 	{	
+		"chap": "Übung 1 - Signale",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Übung 4 - Signale",  
+		"theme": "Gen Gleitfarbe",
+		"themeLong": "Übung1: V-Generator - 1 Gleitfarbe",
+		"processNr": "u4.1"
+		},	 	{	
+		"chap": "Übung 4 - Signale",  
+		"theme": "Vid Farbskalierung",
+		"themeLong": "Übung1: Video - 2 Farbskalierung",
+		"processNr": "u4.2"
+		},	 	{	
+		"chap": "Übung 4 - Signale",  
+		"theme": "Vid Perception Helligkeit",
+		"themeLong": "Übung1: Video - 3 Wahrnehmungsanalyse:Helligkeit",
+		"processNr": "u4.3"
+		},	 	{	
+		"chap": "Übung 4 - Signale",  
+		"theme": "Vid Measurment: Helligkeitspegel",
+		"themeLong": "Übung1: Video - 4a Measurment: Helligkeitspegel",
+		"processNr": "u4.4"
+		},	 	{	
+		"chap": "Übung 4 - Signale",  
+		"theme": "Vid Measurment Histogram",
+		"themeLong": "Übung1: Video - 4b Measurment: Histogram",
+		"processNr": "u4.4b"
+		},	 	{	
+		"chap": "Übung 4 - Signale",  
+		"theme": "Vid Measurment Histogram2",
+		"themeLong": "Übung1: Video - 4c Measurment: Histogram2",
+		"processNr": "u4.4c"
+		},	 	{	
+		"chap": "Übung 4 - Signale",  
+		"theme": "Vid Capture Input",
+		"themeLong": "Video - 5 Capture-Eingang mit WEBRTC",
+		"processNr": "u4.5"
+		},	 	{	
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		}, 		{
+		"chap": "Übung 4 - Bearbeitung",  
+		"theme": "Vid Kompression Gamma",
+		"themeLong": "Übung2: Video - 6 Kompression-Gamma",
+		"processNr": "u4.6"
+		}, 		{
+		"chap": "Übung 4 - Bearbeitung",  
+		"theme": "Vid ChromaKeying Dif",
+		"themeLong": "Übung2: Video - 7a Differenz-Bild mit Quantisierungsstufen für 7b ChromaKeying",
+		"processNr": "u4.7a"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid Cromakey Dif StoreStart",
+		"themeLong": "Übung2: Video - 7b ChromaKeying mit beliebigem Hindergrunds-Stand-Bild",
+		"processNr": "u4.7b"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid Sobel & Schwellwert",
+		"themeLong": "Übung2: Video - 8 Sobel & Schwellwert",
+		"processNr": "u4.8"  
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid Analyse Bewegung low",
+		"themeLong": "Übung2: Video - 9a Analyse auf Bewegung: geringe Bewegung wird Darstellung",
+		"processNr": "u4.9a"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid Analyse Bewegung high",
+		"themeLong": "Übung2: Video - 9b Analyse auf Bewegung: hohe Bewegung mit Farbkodierung",
+		"processNr": "u4.9b"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid 10 leer",
+		"themeLong": "Übung2: Video - 10 leer",
+		"processNr": "u4.10"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid 12 leer",
+		"themeLong": "Übung2: Video - 11 leer",
+		"processNr": "u4.11"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid 12 leer",
+		"themeLong": "Übung2: Video - 12 leer",
+		"processNr": "u4.12"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid 13 leer",
+		"themeLong": "Übung2: Video - 13 leer",
+		"processNr": "u4.13"
+		}, 		{
+		"chap": "Übung 2 - Bearbeitung",  
+		"theme": "Vid 14 leer",
+		"themeLong": "Übung2: Video - 14 leer",
+		"processNr": "u4.14"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "",
+		"themeLong": "",
+		"processNr": ""
+		},		{ 
+		"chap": "Übung 10 - Kompression", 
+		"theme": "Vid FFT Measurment Kom Quant",
+		"themeLong": "Übung10: Video -  11 FFT-Measurment 1 Kommpression Quantisierung",
+		"processNr": "u010.11"
+		}, 		{
+		"chap": "Übung 10 - Kompression", 
+		"theme": "Vid FFT Analyse",
+		"themeLong": "Übung10: Video - 12  FFT-Measurment 2 Analyse",
+		"processNr": "u010.12"
+		}, 		{
+		"chap": "Übung 10 - Kompression", 
+		"theme": "Vid FFT Analyse Schwellwert",
+		"themeLong": "Übung10: Video - 13  FFT-Measurment 3 Analyse Schwellwert",
+		"processNr": "u010.13"
+		}, 		{
+		"chap": "Übung 10 - Kompression", 
+		"theme": "Vid FFT Bearbeitung 1 Frames Schwellwert",
+		"themeLong": "Übung10: Video - 14  FFT-Measurment 4 Bearbeitung 1 Frames Schwellwert",
+		"processNr": "u010.14"
+		}, 		{
+		"chap": "Übung 10 - Kompression", 
+		"theme": "Vid FFT 2 Frames Dif Schwell",
+		"themeLong": "Übung10: Video - 15  FFT-Measurment 5  Bearbeitung 2 Frames Schwelle-Dif + Schwellwert",
+		"processNr": "u010.15"
+		}, 		{ 
+		"chap": "Übung 10 - Kompression", 
+		"theme": "Vid FFT - 3 Frames Dif",
+		"themeLong": "Übung10: Video - 16  FFT-Measurment 6  Bearbeitung 3 Frames Schwelle-Dif + Schwellwert Red",
+		"processNr": "u010.16"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Gen Wavelet T1 Kom",
+		"themeLong": "Übung10: V-Generator 1Hz- 7a Wavelet T1 Kompression",
+		"processNr": "u010.7a"
+		}, 		{
+		"chap": "Übung 3 - Kompression", 
+		"theme": "Vid Wavelet T1 Kom",
+		"themeLong": "Übung10: Video - 7b Wavelet T1 Kompression",
+		"processNr": "u010.7"
+		}
+
+           ]
+        } 	
+	
+    ]  
+
+
+}  

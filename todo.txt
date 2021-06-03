@@ -1,0 +1,14 @@
+Processing Ü4-------------
+ev. Gleiton: fehler Artefakte
+ev. Gleitfarbe: nicht die Berechnung gut zur übergang diverer Farben
+
+
+---------------------------------------------Ü4/10 Processing/Streaming
+
+- Wavelet T2,T3 komplett mit Decode : fehler in Splitt mix zusammenbau, 
+   -Splitt mit seprierung ??? Wie
+
+
+----------------------------------------------- Ü4 ü 10 
+- Objekterkennung  speicher: sinus, sprache, musik -> vergleich-> auswertung
+- MEssung: ??
