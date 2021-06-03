@@ -136,8 +136,15 @@ function setGammaCorrection(iOutput, iInput, comp) {
 	}
 }
 
-function processingVideo47() {  
+function processingVideo47a() {  
+	// Chroma Key first part
+
 }
+
+function processingVideo47b() {  
+	// Chroma Key second part
+}
+
 function processingVideo48() { 
 }
 function processingVideo49() { 
