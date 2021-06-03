@@ -137,6 +137,7 @@ function setGammaCorrection(iOutput, iInput, comp) {
 }
 
 function processingVideo47a() {  
+	// Tugay C. 
 	// Chroma Key first part
 	imgArrayIn = readCanvas(videoPlayer,2);
 	// Process chain begin    ---// Loop through the pixels, turning them in-RGB-Out
@@ -149,6 +150,7 @@ function processingVideo47a() {
 }
 
 function processingVideo47b() {  
+	// Tugay C. 
 	// Chroma Key second part
 	imgArrayIn = readCanvas(videoPlayer,2);
 	// Process chain begin    ---// Loop through the pixels, turning them in-RGB-Out
