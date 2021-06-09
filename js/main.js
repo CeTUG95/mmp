@@ -1,5 +1,5 @@
 /**
- * Created by Juergen Lohr on 2021.
+ * Created by Juergen Lohr on 2021. Git Version
  */
  
     var StartProcess = "u0.2"; // First Process automatic Start by Play-Button

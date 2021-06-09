@@ -1,5 +1,5 @@
 /**
- * Created by Juergen Lohr on 2021.
+ * Created by Juergen Lohr on 2021. Git VERSIOM
  */
 //------------------------------------------------Video----------------------------
 //-------------------------------------------Default---------------------
@@ -65,10 +65,61 @@ function fillCanvas(iOutput, iInput){
 	}
 }
 //-------------------------------------------�bung---------------------
-function processingVideo41() {  
+//Gleitfarbe
+var sceneCounter = 0;
+
+function processingVideo41() {
+	startValue = parseFloat(document.getElementById("In1").value);
+	endValue = parseFloat(document.getElementById("In2").value);
+
+	colourVari(imgArrayOut, startValue, endValue);
+	writeCanvas(iImageOut);
+
+	LogArray = ["imgArrayOut"];
 }
-function processingVideo42() {  
+
+function colourVari(iOutput, start, end) {
+	for (var i = 0; i < iOutput.length; i += 4) {
+		iOutput[i] = Math.abs(start + sceneCounter - end);
+		iOutput[i + 1] = Math.abs(start + 2 * sceneCounter - end);
+		iOutput[i + 2] = Math.abs(start + 3 * sceneCounter - end);
+		iOutput[i + 3] = 255;
+	}
+	if (sceneCounter == 255) {
+		sceneCounter = 0;
+	} else {
+		sceneCounter++;
+	}
 }
+
+//Farbskalierung
+function processingVideo42() {
+	imgArrayIn = readCanvas(videoPlayer, 0);
+
+	var value = parseFloat(document.getElementById("In1").value);
+
+	videoColor(imgArrayOut, imgArrayIn, value);
+	writeCanvas(iImageOut);
+
+	LogArray = ["imgArrayIn", "imgArrayOut"];
+}
+
+function videoColor(iOutput, iInput, iValue) {
+	vu = iValue / 100;
+	vv = (100 - iValue) / 100;
+
+	for (var i = 0; i < iInput.length; i += 4) {
+		y = 0.299 * iInput[i] + 0.587 * iInput[i + 1] + 0.114 * iInput[i + 2];
+		u = 0.492 * (iInput[i + 2] - y) * vu;
+		v = 0.877 * (iInput[i] - y) * vv;
+
+		iOutput[i] = y + 1.140 * v;
+		iOutput[i + 1] = y - 0.395 * u - 0.581 * v;
+		iOutput[i + 2] = y + 2.032 * u;
+		iOutput[i + 3] = 255;
+	}
+}
+
 var count = 0;
 function processingVideo43(event) {
 	// Hier Videoaufgabe Wahrnehmung
@@ -264,9 +315,77 @@ function drawMeasurmentLine(iCanvas) {
   }
 }
 //-------------------------------------------�bung---------------------
-function processingAudio41() { 
+
+function processingAudio41(event) {
+	let sampleRate = event.sampleRate;
+	var startFrequency = parseFloat(document.getElementById("In1").value);
+	var endFrequency = 48000;
+	// Process chain begin    
+	//genSinus(monoSamples, startFrequency, sampleRate, 1, startFrequency, endFrequency);
+	genSinus(monoSamples, startFrequency, endFrequency, sampleRate, 1);
+	// Process chain end
+	writeWebAudio(event, monoSamples);
+	LogArray = ["monoSamples"];  // Define Logging name of array object.
 }
-function processingAudio42() { 
+
+var count = 0;
+
+function genSinus(iOutput, start, end, sampleRate, iOffset) {
+	var maxAmpl = 1;
+	let iOffAmpl = iOffset - 1;
+
+	for (i = 0; i < iOutput.length; ++i) {
+		var at = maxAmpl * Math.sin(2 * Math.PI * (count + start) / sampleRate * i + iOffAmpl)
+		iOutput[i] = at;
+	}
+
+	if (count <= end - start) {
+		count += 5;
+	} else {
+		count = 0;
+	}
+}
+
+function processingAudio42(event) {
+	audArrayIn = readWebAudio(event);
+	let value = parseFloat(document.getElementById("In1").value);
+
+	/*********************
+	 *Mono Output Working *
+	 *********************/
+	//audioPan(monoSamples, audArrayIn, value);
+	//writeWebAudio(event.outputBuffer, monoSamples);
+	//LogArray = ["monoSamples", "audArrayIn.l", "audArrayIn.r"];
+	/**********************
+	 * Stereo Output
+	 * *******************/
+
+	StereoToMono(monoSamples, audArrayIn);
+	value = value / 100;
+	audioPan(audArray2, monoSamples, value);
+	writeWebAudioObject(event.outputBuffer, audArray2);
+	//writeWebAudio(event.outputBuffer, audArray2.r);
+	LogArray = ["monoSamples", "audArray2.l", "audArray2.r"];
+
+}
+
+function audioPan(iOutput, iInput, iValueR) {
+	let vl = 1 - iValueR;
+	let vr = iValueR;
+	//let vl = (100 - iValueR);
+	//let vr = iValueR;
+
+	//Mono Output
+	//for (let i = 0; i < iOutput.length; i++) {
+	//iOutput[i] = parseFloat(iInput.l[i]) * vl + parseFloat(iInput.r[i]) * vr; // writing to Monooutput
+	//}
+	//Stereo Output
+	for (let i = 0; i < iInput.length; i++) {
+		iOutput.r[i] = iInput[i] * vr;
+		iOutput.l[i] = iInput[i] * vl;
+
+	}
+
 }
 
 var count = 0;
@@ -307,19 +426,213 @@ function processingAudio43(event) {
 	}	
 }
 
-function processingAudio44() { 
-} 
+function genSinus2(iOutput, freq, sampleRate, iOffset) {
+	var maxAmpl = 1;
+	let iOffAmpl = iOffset - 1;
+
+	for (i = 0; i < iOutput.length; ++i) {
+		var at = maxAmpl * Math.sin(2 * Math.PI * freq / sampleRate * i + iOffAmpl)
+		iOutput[i] = at;
+	}
+}
+
+//Measurement
+function processingAudio44() {
+	audArrayIn = readWebAudio(event);
+	let sampleRate = 1024
+
+	//initCanvas();
+	//audioMeasurementHisto(monoSamples, audArrayIn);
+	//StereoToMono(monoSamples, audArrayIn);
+	genSinus2(monoSamples, 40000, sampleRate, 1)
+
+
+	processCanvas(monoSamples, peak(monoSamples));
+
+	writeWebAudio(event.outputBuffer, monoSamples);
+
+	//writeWebAudio(event, monoSamples);
+	LogArray = ["monoSamples", "audArrayIn.l", "audArrayIn.r"];
+
+}
+
+function processCanvas(iInput, iAmplitude) {
+	let measureAmplAudio = new Object();
+	measureAmplAudio.min = -96;
+	measureAmplAudio.max = 0;
+	measureAmplAudio.low = -23;
+	measureAmplAudio.high = -9;
+	measureAmplAudio.optimum = -90;
+
+	//let iAmplitude = peak(iInput);
+	let measPegel = pegelDB(iInput);
+	//document.body.appendChild(measureAmplAudio);
+	context.font = "12px Arial";
+	measResult = 0.0;
+	var ctx = canvas.getContext("2d");
+	canvas.width = 500;
+	canvas.height = 300;
+	ctx.moveTo(0, 0);
+	ctx.fillStyle = "#FF0000";
+
+	let lOffset = 100;
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.fillText("Meas.Audio Peak dBFs: " + iAmplitude, 10, 30);
+	ctx.fillRect(0, 40, lOffset + iAmplitude, 20);
+	//Grid
+	ctx.fillText("|0", lOffset, 70)
+	ctx.fillText("|-70", lOffset - 70, 70);
+	ctx.fillText("|-50", lOffset - 50, 70);
+	ctx.fillText("|-30", lOffset - 30, 70);
+
+	ctx.fillText("Meas. Pegel dbFs: " + measPegel, 10, 90);
+	ctx.fillRect(0, 100, lOffset + measPegel, 20);
+	measureAmplAudio.value = measPegel.toFixed(2);
+
+	//Grid
+	ctx.fillText("|0", lOffset, 130)
+	ctx.fillText("|-70", lOffset - 70, 130);
+	ctx.fillText("|-50", lOffset - 50, 130);
+	ctx.fillText("|-30", lOffset - 30, 130);
+	ctx.stroke();
+
+}
+
+function initMeasureAudio() {
+
+}
+
+function pegelDB(iInput) {
+	let measPegel = 0.000000000000001;
+
+	for (let i = 0; i < iInput.length; i++) {
+		measPegel += db(Math.abs(iInput[i]));
+	}
+	measPegel = (measPegel / iInput.length);
+	return measPegel;
+
+}
+function peak(iInput) {
+	let measResult = 0.000000000000001;
+
+	for (let i = 0; i < iInput.length; i++) {
+		if (measResult < iInput[i]) {
+			measResult = Math.abs(iInput[i]);
+		}
+
+	}
+	let iAmplitude = db(measResult);
+	return iAmplitude;
+}
 
 function processingAudio45() {  
 }
 
-function processingAudio46() {
+
+////////////////
+//Kompression//
+//////////////
+function processingAudio46(event) {
+
+	let thresholdDB = parseFloat(document.getElementById("In1").value);
+	let compressionFactor = parseFloat(document.getElementById("In2").value);
+	let volume = pegel(parseFloat(document.getElementById("In3").value));
+	let threshold = pegel(thresholdDB);
+	let compression = 1 / (compressionFactor);
+
+	//audArrayIn = readWebAudio(event);
+	// Process chain begin
+	//StereoToMono(monoSamples, audArrayIn);
+	genSinus2(monoSamples, 400, sampleRate, 1)
+	AudioKompressor(monoSamples, DelaySamples, threshold, compression);
+	//setAmplitude(ScaleSamplesP, VolumenSamples, volume);
+	// Process chain end
+	//writeWebAudio(event, monoSamples);
+	writeWebAudio(event, DelaySamples);
+	LogArray = ["monoSamples", "DelaySamples"];  // Define Logging name of array object.
+
 }
 
-function processingAudio47() {  
+function AudioKompressor(inSamples, outSamples, threshold, compression) {
+	for (let i = 0; i < inSamples.length; i++) {
+		let ival = Math.abs(inSamples[i]);
+		if (ival > threshold) {
+			outSamples[i] = threshold;
+			outSamples[i] += (ival - threshold) * compression;
+			if (inSamples[i] < 0) outSamples[i] *= -1;
+
+		} else {
+			outSamples[i] = inSamples[i];
+		}
+	}
 }
 
-function processingAudio48() {  
+
+///////////////////////
+///Enhancer/Exciter///
+/////////////////////
+
+function processingAudio47(event) {
+	var level = pegel(parseFloat(document.getElementById("In1").value));
+	var positiv = 1 / parseFloat(document.getElementById("In2").value);
+	var negativ = 1 / parseFloat(document.getElementById("In3").value);
+	var volume = pegel(parseFloat(document.getElementById("In4").value));
+
+	genSinus2(monoSamples, 400, sampleRate, 1)
+	setEnhancer(DelaySamples, monoSamples, level, positiv, negativ);
+
+	writeWebAudio(event, DelaySamples);
+	LogArray = ["monoSamples", "DelaySamples"];  // Define Logging name of array object.
+}
+
+function setEnhancer(iOutput, iInput, iLevel, iPositiv, iNegativ) {
+	for (let i = 0; i < iInput.length; i += 1) {
+		let Dif = iInput[i] - iLevel;
+		let Dif2 = iInput[i] + iLevel;
+		if (iInput[i] > iLevel) iOutput[i] = iLevel + Dif * iPositiv;
+		else if (iInput[i] < -iLevel) iOutput[i] = -iLevel + Dif2 * iNegativ;
+		else iOutput[i] = iInput[i];
+	}
+}
+
+////////////
+///Delay///
+//////////
+let iDelay = [];
+function processingAudio48(event) {
+	var directGain = pegel(parseFloat(document.getElementById("In1").value));
+	var delayGain = pegel(parseFloat(document.getElementById("In2").value));
+	var delayTime = parseFloat(document.getElementById("In3").value);
+	var feedback = pegel(parseFloat(document.getElementById("In4").value));
+	audArrayIn = readWebAudio(event);
+	let sampleRate = event.sampleRate;
+	// Process chain begin
+	StereoToMono(monoSamples, audArrayIn);
+	setDelayFeedback(DelaySamples, monoSamples, sampleRate, delayTime, feedback, directGain, delayGain)
+	// Process chain end
+
+	writeWebAudio(event.outputBuffer, DelaySamples);
+	LogArray = ["monoSamples", "DelaySamples"];  // Define Logging name of array object.
+}
+
+function setDelayFeedback(iOutput, iInput, sampleRate, iDelayTime, feedbackGain, iDirectGain, iDelayGain) {
+	let iDelayOffset = iOutput.length;
+	let iDelaySamples = parseInt(sampleRate / (1000 / iDelayTime));
+
+
+	for (let i = 0; i < iInput.length; i++) {
+		iDelay[i + iDelayOffset] = iInput[i];
+		iDelay[i + iDelayOffset] += feedbackGain * iDelay[i + iDelayOffset - iDelaySamples];
+	}
+
+	for (let i = 0; i < iInput.length; i++) { // write DelayBuffWindow to Output
+		iOutput[i] = iDirectGain * iInput[i];
+		iOutput[i] += iDelayGain * iDelay[i + iDelayOffset - iDelaySamples];
+	}
+
+	for (let i = 0; i < iInput.length; i++) { // write DelayBuffPart2 to DelayBuffPart1
+		iDelay[i] = iDelay[i + iDelayOffset];
+	}
 }
 
 function processingAudio49() {  
