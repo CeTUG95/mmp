@@ -186,6 +186,16 @@ function writeWebAudio(iOutput,iInput) {
       } 
 }
 
+function writeWebAudioObject(iOutput, iInput) {
+	sampleOutL = iOutput.getChannelData(0);
+	sampleOutR = iOutput.getChannelData(1);
+	for (i = 0; i < iInput.l.length; i++) {
+		sampleOutL[i] = iInput.l[i];
+		sampleOutR[i] = iInput.r[i];
+
+	}
+}
+
 function processingAudioGenNoise(event) {  
 	var value = parseFloat(document.getElementById("In1").value);
 	// Process chain begin    
