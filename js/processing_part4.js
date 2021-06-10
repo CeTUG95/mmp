@@ -247,7 +247,68 @@ function DeltaGOP_Chroma12(iOutput,iInput2,iInput,value){
 	}
 }
 
+function GRAYtoRGB(iOutput, iInput) {  
+	for(let i = 0; i < iOutput.length; i += 4){
+		iOutput[i] = iInput[i/4];
+		iOutput[i+1] = iInput[i/4];
+		iOutput[i+2] = iInput[i/4];
+		iOutput[i+3] = 255;
+	}
+}
+
+function RGBtoGRAY(iOutput, iInput) { 
+	for(var i = 0; i < iInput.length; i += 4){
+		let out = 0.3 * iInput[i] + 0.50 * iInput[i+1] + 0.11 * iInput[i+2];
+		iOutput[i/4] = out;
+	}
+}
+
+function cutFirstLine(iOutput, iInput) {  
+	for(var i = cw; i < iInput.length-cw; i+=1) {
+		iOutput[i-cw] = iInput[i] ;
+	}
+}
+
+function setSobel(iOutput,iInput, value){
+	var k = -1; 
+	var l = -2;
+	var m =	 1; 
+	var n =  2; 
+
+	/* 	-1 -2 -1 
+		 0  0  0 gefaltet "data" + "127"
+		 1  2  1 
+	*/
+	
+	for(var i = cw+1; i < iInput.length-(cw-1); i+=1){
+		iOutput[i] = Math.abs // vertikal
+		( k * iInput[i-cw-1]    + l * iInput[i-cw]   + k * iInput[i-cw+1]
+		+   m * iInput[i+cw-1]  + n * iInput[i+cw] + m * iInput[i+cw+1])
+		iOutput[i]  +=  Math.abs    //Horizontal
+		( k * iInput[i-cw-1]    + m * iInput[i-cw+1]
+		+   l * iInput[i-1]           + n * iInput[i+1]
+		+   k * iInput[i+cw-1]   + m * iInput[i+cw+1]);
+		if(iOutput[i] <= value){
+			iOutput[i] = 0;
+		}
+	}
+}
+
 function processingVideo48() { 
+	// Sobel & Schwellwert
+	var Schwellwert = parseFloat(document.getElementById("In1").value);
+	imgArrayIn = readCanvas(videoPlayer,2);
+
+	// process chain start
+	RGBtoGRAY(BridnessSamples, imgArrayIn);
+	setSobel(SobelSamples, BridnessSamples, Schwellwert);  
+	cutFirstLine(secondLineBridnessSamples, BridnessSamples);
+	cutFirstLine(secondLineSobelSamples, SobelSamples);
+	GRAYtoRGB(imgArrayOut, secondLineSobelSamples);
+	// process chain end 
+
+	writeCanvas(iImageOut);
+	LogArray = ["imgArrayIn", "imgArrayOut"];
 }
 function processingVideo49() { 
 }

@@ -1387,11 +1387,11 @@ function setMainVideoPlayer(iCW, iCH,iProcessingFunction){  // Canvas width, can
 
 	 TPsamples    = new Array(length * 1);
 	 HPsamples    = new Array(length * 1);
-	 SoebelSamples    = new Array(length * 1);
+	 SobelSamples    = new Array(length * 1);
 	 secondLineBridnessSamples    = new Array(length * 1);
 	 secondLineTPsamples    = new Array(length * 1);
 	 secondLineHPsamples    = new Array(length * 1);
-	 secondLineSoebelSamples    = new Array(length * 1);	 
+	 secondLineSobelSamples    = new Array(length * 1);	 
 	 
 	 DeltaSamples    = new Array(length * 1); //Int16Array
 	 IDeltaSamples    = new Array(length * 1);

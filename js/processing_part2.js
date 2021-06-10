@@ -2,7 +2,7 @@
  * Created by Juergen Lohr on 2021.
  */
  
- function cutFirstLine(iOutput, iInput) {  
+function cutFirstLine(iOutput, iInput) {  
 	for(var i = cw; i < iInput.length-cw; i+=1) {
 		iOutput[i-cw] = iInput[i] ;
 	}
