@@ -282,12 +282,12 @@ function setSobel(iOutput,iInput, value){
 	
 	for(var i = cw+1; i < iInput.length-(cw-1); i+=1){
 		iOutput[i] = Math.abs // vertikal
-		( k * iInput[i-cw-1]    + l * iInput[i-cw]   + k * iInput[i-cw+1]
-		+   m * iInput[i+cw-1]  + n * iInput[i+cw] + m * iInput[i+cw+1])
+		( k * iInput[i-cw-1] + l * iInput[i-cw] + k * iInput[i-cw+1]
+		+ m * iInput[i+cw-1] + n * iInput[i+cw] + m * iInput[i+cw+1])
 		iOutput[i]  +=  Math.abs    //Horizontal
-		( k * iInput[i-cw-1]    + m * iInput[i-cw+1]
-		+   l * iInput[i-1]           + n * iInput[i+1]
-		+   k * iInput[i+cw-1]   + m * iInput[i+cw+1]);
+		( k * iInput[i-cw-1] + m * iInput[i-cw+1]
+		+ l * iInput[i-1] + n * iInput[i+1]
+		+ k * iInput[i+cw-1] + m * iInput[i+cw+1]);
 		if(iOutput[i] <= value){
 			iOutput[i] = 0;
 		}
