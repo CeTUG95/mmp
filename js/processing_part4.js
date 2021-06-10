@@ -247,36 +247,6 @@ function DeltaGOP_Chroma12(iOutput,iInput2,iInput,value){
 	}
 }
 
-function setChromaKeying(iOutput, iInput, QuantFaktor) {  
-	// chromekey base part
-	let tolerance = 40;
-	for (let i = 0; i < iInput.length; i += 4) {
-		if (iInput[i] > QuantFaktor + tolerance || iInput[i] < QuantFaktor - tolerance) {
-			iOutput[i] = iInput[i];
-			iOutput[i + 1] = iInput[i + 1];
-			iOutput[i + 2] = iInput[i + 2];
-			iOutput[i + 3] = 255;
-		}
-		else if (iInput[i + 1] > QuantFaktor + tolerance || iInput[i + 1] < QuantFaktor - tolerance) {
-			iOutput[i] = iInput[i];
-			iOutput[i + 1] = iInput[i + 1];
-			iOutput[i + 2] = iInput[i + 2];
-			iOutput[i + 3] = 255;
-		}
-		else if (iInput[i + 2] > QuantFaktor + tolerance || iInput[i + 2] < QuantFaktor - tolerance) {
-			iOutput[i] = iInput[i];
-			iOutput[i + 1] = iInput[i + 1];
-			iOutput[i + 2] = iInput[i + 2];
-			iOutput[i + 3] = 255;
-		} else {
-			iOutput[i] = iInput[i];
-			iOutput[i + 1] = iInput[i + 1];
-			iOutput[i + 2] = iInput[i + 2];
-			iOutput[i + 3] = 0;
-        }
-	}
-}
-
 function processingVideo48() { 
 }
 function processingVideo49() { 
