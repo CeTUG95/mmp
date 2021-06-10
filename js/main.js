@@ -644,6 +644,7 @@ function mainPlayer(iProzess){
 			setImputFields4("hidden","hidden","Gain Sumant: ","100");
 			loadPlayer(videoPlayer, videoFile2, picFile1);
 			INITDeltaGOP() ;
+			setMousePos(433,142);
               break 
 		case "u4.8":  
 				  

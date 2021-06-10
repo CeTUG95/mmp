@@ -178,7 +178,7 @@ function processingVideo46(event) {
 }
 
 function setGammaCorrection(iOutput, iInput, comp) {  
-	var gammakompress = 1 / comp;
+	var gammakompress = comp / 1;
 	for(let i = 0; i < iInput.length; i += 4){
 		iOutput[i] = 255 * Math.pow((iInput[i] / 255),gammakompress) // iInput[i]; // Red 
 		iOutput[i + 1] = 255 * Math.pow((iInput[i + 1] / 255),gammakompress) // iInput[i + 1]; // Green
@@ -187,30 +187,64 @@ function setGammaCorrection(iOutput, iInput, comp) {
 	}
 }
 
-function processingVideo47a() {  
+var startDelta
+function INITDeltaGOP(){ 
+	startDelta=8;
+}
+
+function processingVideo47a(event) {  
 	// Tugay C. 
-	// Chroma Key first part
+	// Chroma Key Diff
 	imgArrayIn = readCanvas(videoPlayer,2);
 	// Process chain begin    ---// Loop through the pixels, turning them in-RGB-Out
-	var QuantFaktor = parseFloat(document.getElementById("In1").value);
-	setChromaKeying(imgArrayOut, imgArrayIn, QuantFaktor);   	
+	var Faktor = parseFloat(document.getElementById("In1").value);
+	DeltaGOP_Chroma12(imgArrayOut,imgArrayIn2,imgArrayIn,Faktor);   
+	if(startDelta>>0){
+		storeArray(imgArrayIn2,imgArrayIn);
+		startDelta-=1;
+	}
 	// Process chain end
 	writeCanvas(iImageOut);
-	
 	LogArray = ["imgArrayIn", "imgArrayOut"];
 }
 
 function processingVideo47b() {  
 	// Tugay C. 
-	// Chroma Key second part
+	// Chroma Key Diff
 	imgArrayIn = readCanvas(videoPlayer,2);
 	// Process chain begin    ---// Loop through the pixels, turning them in-RGB-Out
-	var QuantFaktor = parseFloat(document.getElementById("In1").value);
-	setChromaKeying(imgArrayOut, imgArrayIn, QuantFaktor);   	
+	var Faktor = parseFloat(document.getElementById("In1").value);
+	DeltaGOP_Chroma12(imgArrayOut,imgArrayIn2,imgArrayIn,Faktor);   
+	if(startDelta>>0){
+		storeArray(imgArrayIn2,imgArrayIn);
+		startDelta-=1;
+	}
 	// Process chain end
 	writeCanvas(iImageOut);
-	
 	LogArray = ["imgArrayIn", "imgArrayOut"];
+}
+
+function storeArray(store, input){
+	for(var i = 0; i < input.length; i++){
+		store[i] = input[i];
+	}
+}
+
+function DeltaGOP_Chroma12(iOutput,iInput2,iInput,value){
+	for(var i = 0;i < iInput.length; i+=4){
+		let R = iOutput[i+0] = iInput[i+0]; 
+		let G = iOutput[i+1] = iInput[i+1]; 
+		let B = iOutput[i+2] = iInput[i+2]; 
+		let dR = Math.abs(iInput2[i+0] - iInput[i+0]);
+		let dG = Math.abs(iInput2[i+1] - iInput[i+1]);
+		let dB = Math.abs(iInput2[i+2] - iInput[i+2]);
+		let Y = (dR + dG + dB); 
+		if(dR <= value && dG <= value && dB <= value){
+			iOutput[i+3] = 0;
+		} else {
+			iOutput[i+3] = 255;
+		}
+	}
 }
 
 function setChromaKeying(iOutput, iInput, QuantFaktor) {  
