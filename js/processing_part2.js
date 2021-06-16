@@ -1,5 +1,5 @@
 /**
- * Created by Juergen Lohr on 2021.
+ * Created by Juergen Lohr on 2021. git
  */
  
 function cutFirstLine(iOutput, iInput) {  
