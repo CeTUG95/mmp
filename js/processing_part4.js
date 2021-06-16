@@ -595,7 +595,7 @@ function processingAudio45() {
 
 
 ////////////////
-//Kompression//
+//Kompression von Nicholas//
 //////////////
 function processingAudio46(event) {
 
@@ -634,7 +634,7 @@ function AudioKompressor(inSamples, outSamples, threshold, compression) {
 
 
 ///////////////////////
-///Enhancer/Exciter///
+///Enhancer/Exciter von Nicholas///
 /////////////////////
 
 function processingAudio47(event) {
@@ -661,29 +661,28 @@ function setEnhancer(iOutput, iInput, iLevel, iPositiv, iNegativ) {
 }
 
 ////////////
-///Delay///
+///Delay von Nicholas///
 //////////
-let iDelay = [];
 function processingAudio48(event) {
 	var directGain = pegel(parseFloat(document.getElementById("In1").value));
 	var delayGain = pegel(parseFloat(document.getElementById("In2").value));
 	var delayTime = parseFloat(document.getElementById("In3").value);
 	var feedback = pegel(parseFloat(document.getElementById("In4").value));
 	audArrayIn = readWebAudio(event);
-	let sampleRate = event.sampleRate;
+	//let sampleRate = event.sampleRate;
 	// Process chain begin
-	StereoToMono(monoSamples, audArrayIn);
-	setDelayFeedback(DelaySamples, monoSamples, sampleRate, delayTime, feedback, directGain, delayGain)
-	// Process chain end
 
-	writeWebAudio(event.outputBuffer, DelaySamples);
-	LogArray = ["monoSamples", "DelaySamples"];  // Define Logging name of array object.
+	StereoToMono(monoSamples, audArrayIn);
+	setDelayFeedback(OutSamples, DelaySamples2, monoSamples, sampleRate, delayTime, feedback, directGain, delayGain)
+	// Process chain end
+	writeWebAudio(event.outputBuffer, OutSamples);
+	LogArray = ["monoSamples", "DelaySamples2", "OutSamples"];  // Define Logging name of array object.
 }
 
-function setDelayFeedback(iOutput, iInput, sampleRate, iDelayTime, feedbackGain, iDirectGain, iDelayGain) {
+function setDelayFeedback(iOutput, iDelay, iInput, sampleRate, iDelayTime, feedbackGain, iDirectGain, iDelayGain) {
 	let iDelayOffset = iOutput.length;
 	let iDelaySamples = parseInt(sampleRate / (1000 / iDelayTime));
-
+	//iDelaySamples = 7000;
 
 	for (let i = 0; i < iInput.length; i++) {
 		iDelay[i + iDelayOffset] = iInput[i];
@@ -691,13 +690,18 @@ function setDelayFeedback(iOutput, iInput, sampleRate, iDelayTime, feedbackGain,
 	}
 
 	for (let i = 0; i < iInput.length; i++) { // write DelayBuffWindow to Output
-		iOutput[i] = iDirectGain * iInput[i];
-		iOutput[i] += iDelayGain * iDelay[i + iDelayOffset - iDelaySamples];
+		iOutput[i] = parseFloat(iDirectGain * iInput[i]);
+		iOutput[i] += parseFloat(iDelayGain * iDelay[i + iDelayOffset - iDelaySamples]);
 	}
 
 	for (let i = 0; i < iInput.length; i++) { // write DelayBuffPart2 to DelayBuffPart1
 		iDelay[i] = iDelay[i + iDelayOffset];
 	}
+
+	/*for (let i = 0; i < iInput.length; i++) { // write DelayBuffPart2 to DelayBuffPart1
+		iOutput[i] = iInput[i];
+	}*/
+
 }
 
 function processingAudio49() {  

@@ -1,5 +1,5 @@
 /**
- * Created by Juergen Lohr on 2021.
+ * Created by Juergen Lohr on 2021. Git
  */
 
 //	---------------------------------------------------------------- Video Processing  Default--------------------------------------------------------------
@@ -261,6 +261,10 @@ function processingAudioMono(event) {
 	LogArray = ["monoSamples"];  
 }  
 function StereoToMono(iOutput, iInput) { 
+	//My Code
+	for (i = 0; i < event.inputBuffer.length; i++) {
+		iOutput[i] = parseFloat(iInput.l[i]) + parseFloat(iInput.r[i]);
+	}	
  }
 
 
