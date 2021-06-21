@@ -313,6 +313,57 @@ function processingVideo48() {
 function processingVideo49() { 
 }
 
+function processingVideo49a() {
+	let Value1 = parseFloat(document.getElementById("In1").value);
+	let Value2 = parseFloat(document.getElementById("In2").value);
+	let Value3 = parseFloat(document.getElementById("In3").value);
+
+	imgArrayIn = readCanvas(videoPlayer, 0);
+	// Process chain begin
+	RGBtoGRAY(BridnessSamples, imgArrayIn);
+	DeltaGOP(ScaleSamples, DeltaSamples, BridnessSamples);
+	DeltaGOP_ChromaAnalyse(imgArrayOut, ScaleSamples, imgArrayIn, Value1, Value2, Value3);
+	StoreArray(DeltaSamples, BridnessSamples);
+	// Process chain end
+	writeCanvas(iImageOut);
+	LogArray = ["BridnessSamples", "DeltaSamples"];  // Define Logging name of array object.
+}
+
+function DeltaGOP(iOutputSamples, iStoreSamples, iInputSamples) {
+	for (let i = 0; i < iInputSamples.length; i += 1) {
+		iOutputSamples[i] = Math.abs(iStoreSamples[i] - iInputSamples[i]);
+	}
+}
+
+function DeltaGOP_ChromaAnalyse(iOutputSamples, iStoreSamples, iInputSamples, iValue1, iValue2, iValue3) {
+	for (let i = 0; i < iInputSamples.length; i += 4) {
+		let R = iOutputSamples[i + 0] = iInputSamples[i + 0];
+		let G = iOutputSamples[i + 1] = iInputSamples[i + 1];
+		let B = iOutputSamples[i + 2] = iInputSamples[i + 2];
+
+		if (iStoreSamples[i / 4] >= iValue3) {
+			iOutputSamples[i + 0] = 255;
+			iOutputSamples[i + 1] = 0;
+			iOutputSamples[i + 2] = 0;
+			iOutputSamples[i + 3] = 255;
+		} else if (iStoreSamples[i / 4] >= iValue2) {
+			iOutputSamples[i + 0] = 0;
+			iOutputSamples[i + 1] = 255;
+			iOutputSamples[i + 2] = 0;
+			iOutputSamples[i + 3] = 255;
+		} else if (iStoreSamples[i / 4] >= iValue1) {
+			iOutputSamples[i + 0] = 0;
+			iOutputSamples[i + 1] = 0;
+			iOutputSamples[i + 2] = 255;
+			iOutputSamples[i + 3] = 255;
+		} else {
+			iOutputSamples[i + 3] = 255;
+		}
+
+	}
+
+}
+
 function processingVideo410() {  
 }
 
