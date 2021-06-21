@@ -704,8 +704,132 @@ function setDelayFeedback(iOutput, iDelay, iInput, sampleRate, iDelayTime, feedb
 
 }
 
-function processingAudio49() {  
+/////////////////////////////////////
+///Analyse im Zeitbereich - Nick////
+////////////////////////////////////
+
+const ctxAudioPegelOpts = {
+	textOffset: 15,
+	maxAmplitude: 75,
+	zeroPoint: 100,
+	MaxDifPoints: 690
 }
+
+let iMesIndex = 0;
+
+function InitCanvas() {
+	context.font = "12px Arial";
+	measResult = 0.0;
+	var ctx = canvas.getContext("2d");
+	canvas.width = 500;
+	canvas.height = 300;
+	ctx.moveTo(0, 0);
+	ctx.fillStyle = "#FF0000";
+}
+
+function processingAudio49(event) {
+	let volume = pegel(parseFloat(document.getElementById("In1").value));
+	let channel = document.getElementById("In2").value;
+	let lev1 = parseFloat(document.getElementById("In3").value); // pegel
+	let lev2 = parseFloat(document.getElementById("In4").value); // pegel
+	let lev3 = parseFloat(document.getElementById("In5").value); // pegel
+
+	if (iMesIndex == ctxAudioPegelOpts.MaxDifPoints) {
+		clearCanvas(customCanvas);
+		iMesIndex = 0;
+	}
+	customCanvas = document.getElementById('customCanvas');
+
+	audArrayIn = readWebAudio(event);
+	// Process chain begin
+	StereoSelectOneChannel(monoSamples, audArrayIn, channel);
+	setAmplitude(monoSamples, monoSamples, volume);
+
+	let DeltaPegel = measAmplitudePegel_Analyse(DelaySamples, monoSamples, lev1);
+	measAudioAnalysePegelDif(DeltaPegel, customCanvas, ctxAudioPegelOpts, lev1, lev2, lev3);
+	StoreArray(DelaySamples, monoSamples);
+	// Process chain end
+	writeWebAudio(event.outputBuffer, DelaySamples);
+	LogArray = ["monoSamples", "DelaySamples"];  // Define Logging name of array object.
+}
+function StoreArray(iOutput, iInput) {
+	for (let i = 0; i < iInput.length; i++) {
+		iOutput[i] = iInput[i];
+	}
+}
+
+function measAmplitudePegel_Analyse(iDelay, iInput, pegel) {
+	let measResult = 0.000000000000001;
+	let measPegel = 0.000000000000001;
+	let delay_measPegel = 0.000000000000001;
+	let Delta_Change = "0";
+
+	for (i = 0; i < iInput.length; i++) {
+		measPegel += db(Math.abs(iInput[i]));
+		delay_measPegel += db(Math.abs((iDelay[i])));
+	}
+	measPegel = (measPegel / iInput.length);
+	delay_measPegel = (delay_measPegel / iDelay.length);
+
+	let DeltaPegel = Math.abs(measPegel - delay_measPegel);
+	if (DeltaPegel <= ctxAudioPegelOpts.maxAmplitude) {
+		Delta_Change = "1";
+	}
+	else {
+		Delta_Change = "0";
+	}
+
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.fillText("Meas. Pegel - Aktuell dBFs: " + measPegel, 10, 60);
+	context.fillText("Meas. Pegel - Delay dBFs: " + delay_measPegel, 10, 80);
+	context.fillText("Delta_Change : " + Delta_Change, 10, 100);
+	//measurAmplAudio.value = measPegel.toFixed(2);
+	return (measPegel - delay_measPegel);
+}
+
+function measAudioAnalysePegelDif(iDifPegel, canvas2, ctx2, pegel1, pegel2, pegel3) {
+	ctx = canvas.getContext("2d");
+	ctx.textBaseline = "middle";
+	ctx.font = "15px Courier-New";
+	ctx.fillStyle = "#000000";
+	ctx.fillText("20", 0, ctxAudioPegelOpts.zeroPoint - ctxAudioPegelOpts.maxAmplitude);
+	ctx.fillText("0", 0, ctxAudioPegelOpts.zeroPoint);
+	ctx.fillText("-20", 0, ctxAudioPegelOpts.zeroPoint + ctxAudioPegelOpts.maxAmplitude);
+	ctx.fillText("y: Differenz-Pegel, x: Zeit", 20, ctxAudioPegelOpts.zeroPoint + ctxAudioPegelOpts.maxAmplitude + 15);
+	ctx.fillStyle = "#cccccc";
+
+	ctx.fillRect(
+		ctxAudioPegelOpts.textOffset,
+		ctxAudioPegelOpts.zeroPoint - ctxAudioPegelOpts.maxAmplitude,
+		customCanvas.width, 1
+	);
+
+	ctx.fillRect(
+		ctxAudioPegelOpts.textOffset,
+		ctxAudioPegelOpts.zeroPoint + ctxAudioPegelOpts.maxAmplitude,
+		customCanvas.width,
+		1);
+
+	let AmpelStyle = "#FF0000";
+	let absPegel = Math.abs(iDifPegel / 20);
+
+	if (absPegel > pegel3 / 20) AmpelStyle = "#FF0000";
+	else if (absPegel > pegel2 / 20) AmpelStyle = "#0000FF";
+	else if (absPegel > pegel1 / 20) AmpelStyle = "#00FF00";
+	else AmpelStyle = "#FFFFFF";
+
+	ctx.fillStyle = AmpelStyle;
+	ctx.fillRect(
+		iMesIndex + ctxAudioPegelOpts.textOffset,
+		ctxAudioPegelOpts.zeroPoint,
+		1,
+		iDifPegel / 20 * ctxAudioPegelOpts.maxAmplitude // monoSamples[i]
+	);
+	iMesIndex++;
+	log(iDifPegel);
+
+}
+
 
 function processingAudio410() {  
 }
