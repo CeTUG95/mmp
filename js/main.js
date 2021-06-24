@@ -710,6 +710,13 @@ function mainPlayer(iProzess){
 			loadPlayer(videoPlayer, videoFile, picFile);
             break 
 
+		case "u010.11": 
+			setMainVideoPlayer(display_fac,display_fac,processingVideo500); //
+			setImputFields("hidden","hidden","TP-Quant-Faktor(1,2,4,8,16,..255. , off: 5555): ","3", "hidden","hidden","MP1 + Mp2-Quant-Faktor: ","2","hidden","hidden","HP-Quant-Faktor: ","1");
+//			setImputFields4("visible","visible","Gain Sumant: ","100");
+			loadPlayer(videoPlayer, videoFile, picFile);
+            break 
+
  
 											   
 				  
