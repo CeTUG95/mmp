@@ -365,18 +365,68 @@ function DeltaGOP_ChromaAnalyse(iOutputSamples, iStoreSamples, iInputSamples, iV
 }
 
 function processingVideo410() {  
+	console.log("Hey 1");
 }
 
 function processingVideo411() {  
+	console.log("Hey 2");
 }
 function processingVideo412() {  
+	console.log("Hey 3");
 }
 
 
 function processingVideo413() {  
+	console.log("Hey 4");
 }
 
 function processingVideo414() {  
+	console.log("Hey 5");
+}
+
+function processingVideo414() {  
+	console.log("Hey 5");
+}
+
+function in2out(iInput,iOutput){
+	for(var i = 0; i < iInput.length; i++){
+		iOutput[i] = iInput[i];
+	}
+}
+
+
+function processingVideo500(){
+	var down_fac = 2;
+	var TPquant = parseFloat(document.getElementById("In1").value);
+	var HPquant = parseFloat(document.getElementById("In2").value);
+	var Round =1;
+
+	in2out(imgArrayIn,imgArrayOut);
+
+	// Process chain begin ------------------------------------   
+	RGBtoGRAY(BridnessSamples, VideoTestArray);   
+	setALength(ALengthSamples, BridnessSamples);   
+	setTP1O1D(TPsamples, ALengthSamples);   
+	setHP1O1D(HPsamples, ALengthSamples);  
+	setDownsampling(TPdownsamples, TPsamples, down_fac);
+	setDownsampling(HPdownsamples, HPsamples, down_fac);
+	setQuant(TPquantsamples, TPdownsamples, TPquant, Round);
+	setQuant(HPquantsamples, HPdownsamples, HPquant, Round);
+		
+	setIQuant(TPIquantsamples, TPquantsamples, TPquant);
+	setIQuant(HPIquantsamples, HPquantsamples, HPquant);
+	setUpsampling(TPupsamples, TPIquantsamples, down_fac);
+	setUpsampling(HPupsamples, HPIquantsamples, down_fac);
+	setTP1O1D(ATPOutsamples, TPupsamples);
+	setAHP1O1D(AHPOutsamples, HPupsamples);
+	setMix(MixOutSamples, ATPOutsamples, AHPOutsamples);
+	setDelay(DelaySamples, MixOutSamples,1)
+	setAmplitude(ScaleSamples, DelaySamples, 2);   
+	GRAYtoRGB(imgArrayOut, ScaleSamples); 
+	// Process chain end  ------------------------------------
+	writeCanvas(iImageOut);
+	analyseError(ErrorLog,ScaleSamples, BridnessSamples,255) 
+	LogArray = ["VideoTestArray", "BridnessSamples", "ALengthSamples", "TPsamples",  "HPsamples", "TPdownsamples","HPdownsamples","TPquantsamples","HPquantsamples","TPIquantsamples","HPIquantsamples", "TPupsamples","HPupsamples","ATPOutsamples", "AHPOutsamples", "MixOutSamples","DelaySamples", "ScaleSamples", "imgArrayOut", "ErrorLog"];
 }
 
 
