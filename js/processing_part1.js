@@ -8,6 +8,11 @@ function writeCanvas(iInput) {
 	context.putImageData(iInput,0, 0); // Draw the ImageData object.
 }
 
+function writeCanvasX(iContext, iInput) {
+	iContext.putImageData(iInput, 0, 0); // Draw the ImageData object.
+}
+
+
 function readCanvas(iVideoPlayer, ih) {  // Player; n. Line to read
     if (iVideoPlayer.paused || iVideoPlayer.ended)        return false;
 //    backcontext.drawImage(iVideoPlayer, 0, 0, cw, ch, 0, 0, cw, ch);    // First Video, draw it into the backing canvas

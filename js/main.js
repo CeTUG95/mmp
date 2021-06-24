@@ -656,7 +656,7 @@ function mainPlayer(iProzess){
              break 
 		case "u4.9a": 
 			setMainVideoPlayer(display_fac,display_fac,processingVideo49a); //9a Analyse auf Bewegung: geringe Bewegung wird Darstellung
-			setImputFields("visible","visible","Value: (0...255)","8", "hidden","hidden","HP-Quant-Faktor: ","1", "hidden","hidden","Grenzfreq.(Hz): ","1");
+					setImputFields("visible", "visible", "Value: blue > (0...255)", "4", "visible", "visible", "Value2: gruen > (0...255)", "28", "visible", "visible", "Value3: rot> (0...255)","56");
 			setImputFields4("hidden","hidden","Gain Sumant: ","100");
 			loadPlayer(videoPlayer, videoFile, picFile); 
              break 
@@ -1374,6 +1374,8 @@ function setMainVideoPlayer(iCW, iCH,iProcessingFunction){  // Canvas width, can
 	imgH = iCH;  //Processing Array W and H
 	iImageOut = context.createImageData(iCW, iCH);  //Processing Array W and H
 	imgArrayOut = iImageOut.data;
+	iImageOut2 = context.createImageData(iCW, iCH);  
+	imgArrayOut2 = iImageOut2.data;
 	iImageIn2 = context.createImageData(iCW, iCH);  //Processing Array W and H
 	imgArrayIn2 = iImageIn2.data;
 	iImageIn3 = context.createImageData(iCW, iCH);  //Processing Array W and H

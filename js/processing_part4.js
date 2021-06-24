@@ -317,16 +317,21 @@ function processingVideo49a() {
 	let Value1 = parseFloat(document.getElementById("In1").value);
 	let Value2 = parseFloat(document.getElementById("In2").value);
 	let Value3 = parseFloat(document.getElementById("In3").value);
+	customCanvas.width = 128;
+	customCanvas.height = 128;
 
 	imgArrayIn = readCanvas(videoPlayer, 0);
 	// Process chain begin
 	RGBtoGRAY(BridnessSamples, imgArrayIn);
 	DeltaGOP(ScaleSamples, DeltaSamples, BridnessSamples);
-	DeltaGOP_ChromaAnalyse(imgArrayOut, ScaleSamples, imgArrayIn, Value1, Value2, Value3);
+	DeltaGOP_ChromaAnalyse(imgArrayOut2, ScaleSamples, imgArrayIn, Value1, Value2, Value3);
 	StoreArray(DeltaSamples, BridnessSamples);
+	GRAYtoRGB(imgArrayOut, BridnessSamples);
 	// Process chain end
+	
+	writeCanvasX(customCtx, iImageOut2);
 	writeCanvas(iImageOut);
-	LogArray = ["BridnessSamples", "DeltaSamples"];  // Define Logging name of array object.
+	LogArray = ["BridnessSamples", "DeltaSamples", "ScaleSamples"];  // Define Logging name of array object.
 }
 
 function DeltaGOP(iOutputSamples, iStoreSamples, iInputSamples) {
@@ -769,14 +774,16 @@ const ctxAudioPegelOpts = {
 let iMesIndex = 0;
 
 function InitCanvas() {
-	context.font = "12px Arial";
+	customCtx.font = "12px Arial";
 	measResult = 0.0;
-	var ctx = canvas.getContext("2d");
-	canvas.width = 500;
-	canvas.height = 300;
-	ctx.moveTo(0, 0);
-	ctx.fillStyle = "#FF0000";
+	//var ctx = customCanvas.getContext("2d");
+	customCanvas.width = 500;
+	customCanvas.height = 300;
+	customCtx.moveTo(0, 0);
+	customCtx.fillStyle = "#FF0000";
 }
+
+//customCanvas = document.getElementById('customCanvas');
 
 function processingAudio49(event) {
 	let volume = pegel(parseFloat(document.getElementById("In1").value));
@@ -786,10 +793,11 @@ function processingAudio49(event) {
 	let lev3 = parseFloat(document.getElementById("In5").value); // pegel
 
 	if (iMesIndex == ctxAudioPegelOpts.MaxDifPoints) {
-		clearCanvas(customCanvas);
+		//clearCanvas(customCanvas);
+		
 		iMesIndex = 0;
 	}
-	customCanvas = document.getElementById('customCanvas');
+	
 
 	audArrayIn = readWebAudio(event);
 	// Process chain begin
@@ -799,6 +807,7 @@ function processingAudio49(event) {
 	let DeltaPegel = measAmplitudePegel_Analyse(DelaySamples, monoSamples, lev1);
 	measAudioAnalysePegelDif(DeltaPegel, customCanvas, ctxAudioPegelOpts, lev1, lev2, lev3);
 	StoreArray(DelaySamples, monoSamples);
+	console.log(monoSamples.length / sampleRate);
 	// Process chain end
 	writeWebAudio(event.outputBuffer, DelaySamples);
 	LogArray = ["monoSamples", "DelaySamples"];  // Define Logging name of array object.
@@ -833,32 +842,32 @@ function measAmplitudePegel_Analyse(iDelay, iInput, pegel) {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.fillText("Meas. Pegel - Aktuell dBFs: " + measPegel, 10, 60);
 	context.fillText("Meas. Pegel - Delay dBFs: " + delay_measPegel, 10, 80);
-	context.fillText("Delta_Change : " + Delta_Change, 10, 100);
+	//context.fillText("Delta_Change : " + Delta_Change, 10, 100);
 	//measurAmplAudio.value = measPegel.toFixed(2);
 	return (measPegel - delay_measPegel);
 }
 
-function measAudioAnalysePegelDif(iDifPegel, canvas2, ctx2, pegel1, pegel2, pegel3) {
-	ctx = canvas.getContext("2d");
+function measAudioAnalysePegelDif(iDifPegel, canvas2, ictxAudioPegelOpts, pegel1, pegel2, pegel3) {
+	ctx = canvas2.getContext("2d");
 	ctx.textBaseline = "middle";
 	ctx.font = "15px Courier-New";
 	ctx.fillStyle = "#000000";
-	ctx.fillText("20", 0, ctxAudioPegelOpts.zeroPoint - ctxAudioPegelOpts.maxAmplitude);
-	ctx.fillText("0", 0, ctxAudioPegelOpts.zeroPoint);
-	ctx.fillText("-20", 0, ctxAudioPegelOpts.zeroPoint + ctxAudioPegelOpts.maxAmplitude);
-	ctx.fillText("y: Differenz-Pegel, x: Zeit", 20, ctxAudioPegelOpts.zeroPoint + ctxAudioPegelOpts.maxAmplitude + 15);
+	ctx.fillText("20", 0, ictxAudioPegelOpts.zeroPoint - ictxAudioPegelOpts.maxAmplitude);
+	ctx.fillText("0", 0, ictxAudioPegelOpts.zeroPoint);
+	ctx.fillText("-20", 0, ictxAudioPegelOpts.zeroPoint + ictxAudioPegelOpts.maxAmplitude);
+	ctx.fillText("y: Differenz-Pegel, x: Zeit = Samplebuffer: " + (monoSamples.length / sampleRate) + " s", 20, ictxAudioPegelOpts.zeroPoint + ictxAudioPegelOpts.maxAmplitude + 15);
 	ctx.fillStyle = "#cccccc";
 
 	ctx.fillRect(
-		ctxAudioPegelOpts.textOffset,
-		ctxAudioPegelOpts.zeroPoint - ctxAudioPegelOpts.maxAmplitude,
-		customCanvas.width, 1
+		ictxAudioPegelOpts.textOffset,
+		ictxAudioPegelOpts.zeroPoint - ictxAudioPegelOpts.maxAmplitude,
+		canvas2.width, 1
 	);
 
 	ctx.fillRect(
-		ctxAudioPegelOpts.textOffset,
-		ctxAudioPegelOpts.zeroPoint + ctxAudioPegelOpts.maxAmplitude,
-		customCanvas.width,
+		ictxAudioPegelOpts.textOffset,
+		ictxAudioPegelOpts.zeroPoint + ictxAudioPegelOpts.maxAmplitude,
+		canvas2.width,
 		1);
 
 	let AmpelStyle = "#FF0000";
@@ -871,10 +880,10 @@ function measAudioAnalysePegelDif(iDifPegel, canvas2, ctx2, pegel1, pegel2, pege
 
 	ctx.fillStyle = AmpelStyle;
 	ctx.fillRect(
-		iMesIndex + ctxAudioPegelOpts.textOffset,
-		ctxAudioPegelOpts.zeroPoint,
+		iMesIndex + ictxAudioPegelOpts.textOffset,
+		ictxAudioPegelOpts.zeroPoint,
 		1,
-		iDifPegel / 20 * ctxAudioPegelOpts.maxAmplitude // monoSamples[i]
+		iDifPegel / 20 * ictxAudioPegelOpts.maxAmplitude // monoSamples[i]
 	);
 	iMesIndex++;
 	log(iDifPegel);
