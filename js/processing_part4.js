@@ -393,20 +393,11 @@ function processingVideo414() {
 	console.log("Hey 5");
 }
 
-function in2out(iInput,iOutput){
-	for(var i = 0; i < iInput.length; i++){
-		iOutput[i] = iInput[i];
-	}
-}
-
-
 function processingVideo500(){
 	var down_fac = 2;
 	var TPquant = parseFloat(document.getElementById("In1").value);
 	var HPquant = parseFloat(document.getElementById("In2").value);
 	var Round =1;
-
-	in2out(imgArrayIn,imgArrayOut);
 
 	// Process chain begin ------------------------------------   
 	RGBtoGRAY(BridnessSamples, VideoTestArray);   
