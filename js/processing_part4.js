@@ -826,14 +826,11 @@ let iMesIndex = 0;
 function InitCanvas() {
 	customCtx.font = "12px Arial";
 	measResult = 0.0;
-	//var ctx = customCanvas.getContext("2d");
 	customCanvas.width = 500;
 	customCanvas.height = 300;
 	customCtx.moveTo(0, 0);
 	customCtx.fillStyle = "#FF0000";
 }
-
-//customCanvas = document.getElementById('customCanvas');
 
 function processingAudio49(event) {
 	let volume = pegel(parseFloat(document.getElementById("In1").value));
@@ -844,10 +841,8 @@ function processingAudio49(event) {
 
 	if (iMesIndex == ctxAudioPegelOpts.MaxDifPoints) {
 		//clearCanvas(customCanvas);
-		
 		iMesIndex = 0;
 	}
-	
 
 	audArrayIn = readWebAudio(event);
 	// Process chain begin
