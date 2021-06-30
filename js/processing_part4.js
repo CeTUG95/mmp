@@ -393,37 +393,79 @@ function processingVideo414() {
 	console.log("Hey 5");
 }
 
-function processingVideo500(){
-	var down_fac = 2;
-	var TPquant = parseFloat(document.getElementById("In1").value);
-	var HPquant = parseFloat(document.getElementById("In2").value);
-	var Round =1;
-
-	// Process chain begin ------------------------------------   
-	RGBtoGRAY(BridnessSamples, VideoTestArray);   
-	setALength(ALengthSamples, BridnessSamples);   
-	setTP1O1D(TPsamples, ALengthSamples);   
-	setHP1O1D(HPsamples, ALengthSamples);  
-	setDownsampling(TPdownsamples, TPsamples, down_fac);
-	setDownsampling(HPdownsamples, HPsamples, down_fac);
-	setQuant(TPquantsamples, TPdownsamples, TPquant, Round);
-	setQuant(HPquantsamples, HPdownsamples, HPquant, Round);
-		
-	setIQuant(TPIquantsamples, TPquantsamples, TPquant);
-	setIQuant(HPIquantsamples, HPquantsamples, HPquant);
-	setUpsampling(TPupsamples, TPIquantsamples, down_fac);
-	setUpsampling(HPupsamples, HPIquantsamples, down_fac);
-	setTP1O1D(ATPOutsamples, TPupsamples);
-	setAHP1O1D(AHPOutsamples, HPupsamples);
-	setMix(MixOutSamples, ATPOutsamples, AHPOutsamples);
-	setDelay(DelaySamples, MixOutSamples,1)
-	setAmplitude(ScaleSamples, DelaySamples, 2);   
-	GRAYtoRGB(imgArrayOut, ScaleSamples); 
-	// Process chain end  ------------------------------------
-	writeCanvas(iImageOut);
-	analyseError(ErrorLog,ScaleSamples, BridnessSamples,255) 
-	LogArray = ["VideoTestArray", "BridnessSamples", "ALengthSamples", "TPsamples",  "HPsamples", "TPdownsamples","HPdownsamples","TPquantsamples","HPquantsamples","TPIquantsamples","HPIquantsamples", "TPupsamples","HPupsamples","ATPOutsamples", "AHPOutsamples", "MixOutSamples","DelaySamples", "ScaleSamples", "imgArrayOut", "ErrorLog"];
+function RGBtoGRAY(iOutput, iInput) { 
+	for(var i = 0; i < iInput.length; i += 4){
+		let out = 0.3 * iInput[i] + 0.50 * iInput[i+1] + 0.11 * iInput[i+2];
+		iOutput[i/4] = out;
+	}
 }
+
+function setTP1O1D(iOutput, iInput) {
+	//calc average
+	let avg = (iInput[i] + iInput[i] + iInput[i] + iInput[i]) / 4;
+	iOutput[i] = avg / 4;
+}
+
+function setHP1O1D(iOutput, iInput) {
+	//calc average
+	let avg = (iInput[i] + iInput[i] + iInput[i] + iInput[i]) / 4;
+	iOutput[i] = avg * 4;
+}
+
+function processingVideo500(){
+	imgArrayIn = readCanvas(videoPlayer, 0);
+	storeArray(imgArrayOut, imgArrayIn);
+	storeArray(imgArrayOut2, imgArrayIn);
+
+	//Process Chain start 
+	RGBtoGRAY(BridnessSamples, imgArrayIn);
+	
+
+	customCanvas.width =128;
+	customCanvas.height=128;
+
+	writeCanvasX(customCtx, BridnessSamples);
+	writeCanvas(iImageOut);
+	LogArray = ["imgArrayIn", "imgArrayOut", "imgArrayOut2", "BridnessSamples"];
+}
+
+// function processingVideo500(){
+
+// 	imgArrayIn = readCanvas(videoPlayer, 0);
+// 	in2out(iImageOut, imgArrayIn);
+
+// 	var down_fac = 2;
+// 	var TPquant = parseFloat(document.getElementById("In1").value);
+// 	var HPquant = parseFloat(document.getElementById("In2").value);
+// 	var Round =1;
+// 	in2out();
+
+// 	// Process chain begin ------------------------------------   
+// 	RGBtoGRAY(BridnessSamples, VideoTestArray);   
+// 	setALength(ALengthSamples, BridnessSamples);   
+// 	setTP1O1D(TPsamples, ALengthSamples);   
+// 	setHP1O1D(HPsamples, ALengthSamples);  
+// 	setDownsampling(TPdownsamples, TPsamples, down_fac);
+// 	setDownsampling(HPdownsamples, HPsamples, down_fac);
+// 	setQuant(TPquantsamples, TPdownsamples, TPquant, Round);
+// 	setQuant(HPquantsamples, HPdownsamples, HPquant, Round);
+		
+// 	setIQuant(TPIquantsamples, TPquantsamples, TPquant);
+// 	setIQuant(HPIquantsamples, HPquantsamples, HPquant);
+// 	setUpsampling(TPupsamples, TPIquantsamples, down_fac);
+// 	setUpsampling(HPupsamples, HPIquantsamples, down_fac);
+// 	setTP1O1D(ATPOutsamples, TPupsamples);
+// 	setAHP1O1D(AHPOutsamples, HPupsamples);
+// 	setMix(MixOutSamples, ATPOutsamples, AHPOutsamples);
+// 	setDelay(DelaySamples, MixOutSamples,1)
+// 	setAmplitude(ScaleSamples, DelaySamples, 2);   
+// 	GRAYtoRGB(imgArrayOut, ScaleSamples); 
+// 	// Process chain end  ------------------------------------
+// 	writeCanvas(iImageOut);
+// 	writeCanvasX(customCtx,iImageOut);
+// 	analyseError(ErrorLog,ScaleSamples, BridnessSamples,255) 
+// 	LogArray = ["imgArrayIn", "VideoTestArray", "BridnessSamples", "ALengthSamples", "TPsamples",  "HPsamples", "TPdownsamples","HPdownsamples","TPquantsamples","HPquantsamples","TPIquantsamples","HPIquantsamples", "TPupsamples","HPupsamples","ATPOutsamples", "AHPOutsamples", "MixOutSamples","DelaySamples", "ScaleSamples", "imgArrayOut", "ErrorLog"];
+// }
 
 
 //-----------------------------------------------Audio------------------------------
@@ -817,11 +859,14 @@ let iMesIndex = 0;
 function InitCanvas() {
 	customCtx.font = "12px Arial";
 	measResult = 0.0;
+	//var ctx = customCanvas.getContext("2d");
 	customCanvas.width = 500;
 	customCanvas.height = 300;
 	customCtx.moveTo(0, 0);
 	customCtx.fillStyle = "#FF0000";
 }
+
+//customCanvas = document.getElementById('customCanvas');
 
 function processingAudio49(event) {
 	let volume = pegel(parseFloat(document.getElementById("In1").value));
@@ -832,8 +877,10 @@ function processingAudio49(event) {
 
 	if (iMesIndex == ctxAudioPegelOpts.MaxDifPoints) {
 		//clearCanvas(customCanvas);
+		
 		iMesIndex = 0;
 	}
+	
 
 	audArrayIn = readWebAudio(event);
 	// Process chain begin
