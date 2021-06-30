@@ -412,7 +412,15 @@ function setHP1O1D(iOutput, iInput) {
 	iOutput[i] = avg * 4;
 }
 
-function processingVideo500(){
+const down_fac = 2;
+const Block = cw;
+const WavletLayer = 1;
+const Round = 0;
+/*function processingVideo500() {
+	var TPquant = parseInt(document.getElementById("In1").value);
+	var MPquant = parseInt(document.getElementById("In2").value);
+	var HPquant = parseInt(document.getElementById("In3").value);
+	var gain = parseInt(document.getElementById("In4").value);
 	imgArrayIn = readCanvas(videoPlayer, 0);
 	storeArray(imgArrayOut, imgArrayIn);
 	storeArray(imgArrayOut2, imgArrayIn);
@@ -424,48 +432,48 @@ function processingVideo500(){
 	customCanvas.width =128;
 	customCanvas.height=128;
 
-	writeCanvasX(customCtx, BridnessSamples);
+	//writeCanvasX(customCtx, BridnessSamples);
 	writeCanvas(iImageOut);
 	LogArray = ["imgArrayIn", "imgArrayOut", "imgArrayOut2", "BridnessSamples"];
-}
+}*/
 
-// function processingVideo500(){
+ function processingVideo500(){
 
-// 	imgArrayIn = readCanvas(videoPlayer, 0);
-// 	in2out(iImageOut, imgArrayIn);
+ 	imgArrayIn = readCanvas(videoPlayer, 0);
+ 	//in2out(iImageOut, imgArrayIn);
 
-// 	var down_fac = 2;
-// 	var TPquant = parseFloat(document.getElementById("In1").value);
-// 	var HPquant = parseFloat(document.getElementById("In2").value);
-// 	var Round =1;
-// 	in2out();
+	var down_fac = 2;
+	var TPquant = parseFloat(document.getElementById("In1").value);
+ 	var HPquant = parseFloat(document.getElementById("In2").value);
+ 	var Round =1;
+ 	//in2out();
 
-// 	// Process chain begin ------------------------------------   
-// 	RGBtoGRAY(BridnessSamples, VideoTestArray);   
-// 	setALength(ALengthSamples, BridnessSamples);   
-// 	setTP1O1D(TPsamples, ALengthSamples);   
-// 	setHP1O1D(HPsamples, ALengthSamples);  
-// 	setDownsampling(TPdownsamples, TPsamples, down_fac);
-// 	setDownsampling(HPdownsamples, HPsamples, down_fac);
-// 	setQuant(TPquantsamples, TPdownsamples, TPquant, Round);
-// 	setQuant(HPquantsamples, HPdownsamples, HPquant, Round);
+	 // Process chain begin ------------------------------------   
+	 RGBtoGRAY(BridnessSamples, imgArrayIn);   
+ 	setALength(ALengthSamples, BridnessSamples);   
+ 	setTP1O1D(TPsamples, ALengthSamples);   
+ 	setHP1O1D(HPsamples, ALengthSamples);  
+ 	setDownsampling(TPdownsamples, TPsamples, down_fac);
+ 	setDownsampling(HPdownsamples, HPsamples, down_fac);
+ 	setQuant(TPquantsamples, TPdownsamples, TPquant, Round);
+ 	setQuant(HPquantsamples, HPdownsamples, HPquant, Round);
 		
-// 	setIQuant(TPIquantsamples, TPquantsamples, TPquant);
-// 	setIQuant(HPIquantsamples, HPquantsamples, HPquant);
-// 	setUpsampling(TPupsamples, TPIquantsamples, down_fac);
-// 	setUpsampling(HPupsamples, HPIquantsamples, down_fac);
-// 	setTP1O1D(ATPOutsamples, TPupsamples);
-// 	setAHP1O1D(AHPOutsamples, HPupsamples);
-// 	setMix(MixOutSamples, ATPOutsamples, AHPOutsamples);
-// 	setDelay(DelaySamples, MixOutSamples,1)
-// 	setAmplitude(ScaleSamples, DelaySamples, 2);   
-// 	GRAYtoRGB(imgArrayOut, ScaleSamples); 
-// 	// Process chain end  ------------------------------------
-// 	writeCanvas(iImageOut);
-// 	writeCanvasX(customCtx,iImageOut);
-// 	analyseError(ErrorLog,ScaleSamples, BridnessSamples,255) 
-// 	LogArray = ["imgArrayIn", "VideoTestArray", "BridnessSamples", "ALengthSamples", "TPsamples",  "HPsamples", "TPdownsamples","HPdownsamples","TPquantsamples","HPquantsamples","TPIquantsamples","HPIquantsamples", "TPupsamples","HPupsamples","ATPOutsamples", "AHPOutsamples", "MixOutSamples","DelaySamples", "ScaleSamples", "imgArrayOut", "ErrorLog"];
-// }
+	setIQuant(TPIquantsamples, TPquantsamples, TPquant);
+ 	setIQuant(HPIquantsamples, HPquantsamples, HPquant);
+	setUpsampling(TPupsamples, TPIquantsamples, down_fac);
+	setUpsampling(HPupsamples, HPIquantsamples, down_fac);
+	setTP1O1D(ATPOutsamples, TPupsamples);
+ 	setAHP1O1D(AHPOutsamples, HPupsamples);
+ 	setMix(MixOutSamples, ATPOutsamples, AHPOutsamples);
+ 	setDelay(DelaySamples, MixOutSamples,1)
+	 setAmplitude(ScaleSamples, DelaySamples, 2);
+	 GRAYtoRGB(imgArrayOut, ScaleSamples); 
+ 	// Process chain end  ------------------------------------
+	writeCanvas(iImageOut);
+ 	writeCanvasX(customCtx,iImageOut);
+ 	analyseError(ErrorLog,ScaleSamples, BridnessSamples,255) 
+ 	LogArray = ["imgArrayIn", "VideoTestArray", "BridnessSamples", "ALengthSamples", "TPsamples",  "HPsamples", "TPdownsamples","HPdownsamples","TPquantsamples","HPquantsamples","TPIquantsamples","HPIquantsamples", "TPupsamples","HPupsamples","ATPOutsamples", "AHPOutsamples", "MixOutSamples","DelaySamples", "ScaleSamples", "imgArrayOut", "ErrorLog"];
+ }
 
 
 //-----------------------------------------------Audio------------------------------
