@@ -50,6 +50,12 @@ function setIDelta(iOutput, iInput) {
 }
 
 function setQuant(iOutput, iInput, iQuant, iRound)	{
+	// ich gehe das array durch und teile es damit es kleiner wird. bei Iquant wird das array multipliziert
+	for(i=0; i<iInput.length;i++){
+		if(i%iQuant){
+			iOutput[i] = iInput[i];
+		}
+	}
 }
 
 function setIQuant(iOutput, iInput, iQuant)	{
@@ -168,16 +174,26 @@ function setDownsampling(iOutput, iInput, idown_fac) {		//Downsampling
 }
 
 function setUpsampling(iOutput, iInput, idown_fac) {		//Downsampling
+	// rauskommen soll von 1,3,5,7 --> 1,0,3,0,5,7,0
+	for(i=0;i<iInput.length;i++){
+		iOutput[i] = iInput[i];
+	}
 }
 
 function setAHP1O1D(iOutput, iInput) {  
+	// inverser hochpass --> unterlagen anschauen minus aktieller wert + vorgänger oder alles mal -1 vom hochpass 
 }
 
 function setMix(iOutput, iInput2, iInput1) {		//Mix
+	// Die beiden eingabewerte werden zusammengesmischt also addition 
 }
 
 function setDelay(iOutput, iInput,iDelaySamples) {		//Scale und shift
+	// wenn array und an position 0 bis lenght um einen wert nach vorne verschoben 
+	// bei input array gehts bei 1 los bei output gehts bei 0 los 
  }
+
+ // bei wavelet kommt hinzu --> dass wir sagen wir drehen alles und packen das alles wieder durch hochpass und gesamten subband wieder rein 
 
 
 //--------------------FFT
