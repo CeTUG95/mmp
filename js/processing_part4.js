@@ -393,23 +393,29 @@ function processingVideo414() {
 	console.log("Hey 5");
 }
 
+
+
 function RGBtoGRAY(iOutput, iInput) { 
 	for(var i = 0; i < iInput.length; i += 4){
-		let out = 0.3 * iInput[i] + 0.50 * iInput[i+1] + 0.11 * iInput[i+2];
+		let out = 0.3 * iInput[i] + 0.5 * iInput[i+1] + 0.2 * iInput[i+2];
 		iOutput[i/4] = out;
 	}
 }
 
 function setTP1O1D(iOutput, iInput) {
 	//calc average
-	let avg = (iInput[i] + iInput[i] + iInput[i] + iInput[i]) / 4;
-	iOutput[i] = avg / 4;
+	iOutput[0] = (iInput[0] / 2);
+	for(var i=1;i<iInput.length - 1;i++){
+		iOutput[i] = (iInput[i-1] + iInput[i]) / 2;
+	}
 }
 
 function setHP1O1D(iOutput, iInput) {
 	//calc average
-	let avg = (iInput[i] + iInput[i] + iInput[i] + iInput[i]) / 4;
-	iOutput[i] = avg * 4;
+	//iOutput[0] = (iInput[0] / 2);
+	for(var i=1;i<iInput.length - 1;i++){
+		iOutput[i] = (iInput[i-1] - iInput[i]) / 2;
+	}
 }
 
 const down_fac = 2;
@@ -449,7 +455,7 @@ const Round = 0;
  	//in2out();
 
 	 // Process chain begin ------------------------------------   
-	 RGBtoGRAY(BridnessSamples, imgArrayIn);   
+	RGBtoGRAY(BridnessSamples, VideoTestArray);   
  	setALength(ALengthSamples, BridnessSamples);   
  	setTP1O1D(TPsamples, ALengthSamples);   
  	setHP1O1D(HPsamples, ALengthSamples);  

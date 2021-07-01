@@ -459,6 +459,9 @@ mouseX = iX;
 mouseY = iY;
 }
 
+// Testarray
+var arrayTest = new Array(1,2,3,4,5,6,7,8);
+
 			//	---------------------------------------------------------------- Interaction Control---------------------------------------------------------------
 	
 function mainPlayer(iProzess){
@@ -711,7 +714,7 @@ function mainPlayer(iProzess){
             break 
 
 		case "u010.11": 
-			setMainVideoPlayer(display_fac,display_fac,processingVideo500); //
+			setMainVideoPlayer(4,4,processingVideo500); //
 			setImputFields("visibe","visible","TP-Quant-Faktor(1,2,4,8,16,..255. , off: 5555): ","3", "hidden","hidden","MP1 + Mp2-Quant-Faktor: ","2","visible","visible","HP-Quant-Faktor: ","1");
 //			setImputFields4("visible","visible","Gain Sumant: ","100");
 			loadPlayer(videoPlayer, videoFile, picFile);

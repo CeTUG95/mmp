@@ -153,9 +153,20 @@ function processingVideoKompSubband() {
 }
 
 function setALength(iOutput, iInput) {		//Downsampling
- }
+	for(var i=0; i<iInput.length;i++){
+		iOutput[i] = iInput[i];
+	}
+	iOutput[iOutput.length-1] = 0;
+}
 
 function setDownsampling(iOutput, iInput, idown_fac) {		//Downsampling
+	var k = 0;
+	for(var i = 0;i<iInput.length;i++){
+		if(i%2){
+			iOutput[k] = iInput[i];
+			k++;
+		}
+	}
 }
 
 

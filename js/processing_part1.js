@@ -124,6 +124,7 @@ function RGBtoGRAY(iOutput, iInput) {
 		iOutput[i/4] = out;
 	}
 }
+
 function processingVideoPerceptionTransparency() { 
 	var	clip1StartTime  = 15000;
 	var	clip1DurationTime  = 6000;
