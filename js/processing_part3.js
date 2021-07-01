@@ -161,14 +161,11 @@ function setALength(iOutput, iInput) {		//Downsampling
 
 function setDownsampling(iOutput, iInput, idown_fac) {		//Downsampling
 	var k = 0;
-	for(var i = 0;i<iInput.length;i++){
-		if(i%2){
-			iOutput[k] = iInput[i];
-			k++;
-		}
+	for(var i = 0;i<iInput.length;i+=2){
+		iOutput[k] = iInput[i];
+		k++;
 	}
 }
-
 
 function setUpsampling(iOutput, iInput, idown_fac) {		//Downsampling
 }

@@ -412,7 +412,7 @@ function setTP1O1D(iOutput, iInput) {
 
 function setHP1O1D(iOutput, iInput) {
 	//calc average
-	//iOutput[0] = (iInput[0] / 2);
+	iOutput[0] = (iInput[0] / 2);
 	for(var i=1;i<iInput.length - 1;i++){
 		iOutput[i] = (iInput[i-1] - iInput[i]) / 2;
 	}
@@ -422,26 +422,6 @@ const down_fac = 2;
 const Block = cw;
 const WavletLayer = 1;
 const Round = 0;
-/*function processingVideo500() {
-	var TPquant = parseInt(document.getElementById("In1").value);
-	var MPquant = parseInt(document.getElementById("In2").value);
-	var HPquant = parseInt(document.getElementById("In3").value);
-	var gain = parseInt(document.getElementById("In4").value);
-	imgArrayIn = readCanvas(videoPlayer, 0);
-	storeArray(imgArrayOut, imgArrayIn);
-	storeArray(imgArrayOut2, imgArrayIn);
-
-	//Process Chain start 
-	RGBtoGRAY(BridnessSamples, imgArrayIn);
-	
-
-	customCanvas.width =128;
-	customCanvas.height=128;
-
-	//writeCanvasX(customCtx, BridnessSamples);
-	writeCanvas(iImageOut);
-	LogArray = ["imgArrayIn", "imgArrayOut", "imgArrayOut2", "BridnessSamples"];
-}*/
 
  function processingVideo500(){
 
