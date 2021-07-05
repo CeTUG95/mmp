@@ -493,6 +493,7 @@ function processingAudioGenKompFFT(event) {
 	// Process chain begin ------------------------------------  
 	FFTKoef.forward(oneHzAudio);
 	doFFTSpectrum(FFTKoef);
+	maskFFT(FFT2.real, FFTKoef.real, 0.5);
 	quantMatrix(QuantFFT,FFTKoef, QuantMatrix,Round);
 	doFFTSpectrum(QuantFFT);
 	
@@ -502,8 +503,8 @@ function processingAudioGenKompFFT(event) {
 	// Process chain end
     writeWebAudio(event,iInverseFFT);
 	
-	analyseError(ErrorLog,iInverseFFT, oneHzAudio,2.0); 
-	LogArray = ["oneHzAudio",  "QuantMatrix", "FFTKoef.spectrumLong",  "QuantFFT.spectrumLong",  "iQuantFFT.spectrumLong",  "iInverseFFT", "ErrorLog"];
+	analyseError(ErrorLog, iInverseFFT, oneHzAudioImpulse,2.0); 
+	LogArray = ["oneHzAudioImpulse",  "QuantMatrix", "FFTKoef.spectrumLong",  "QuantFFT.spectrumLong",  "iQuantFFT.spectrumLong",  "iInverseFFT", "ErrorLog"];
  }
  
   function doFFTSpectrum(idata) 	{   // 1D FFT : out, in)
@@ -513,28 +514,31 @@ function processingAudioGenKompFFT(event) {
 	}	
 }
 
-function freqQuantMatrix(iQuantMatrix, iTpQuant, iHpQuant, koefNr)	{
-    for(i = 0; i <iQuantMatrix.length  ; i++) {
-
-			iQuantMatrix [i] = iTpQuant;
-
+function freqQuantMatrix(iQuantMatrix, iTpQuant, iHpQuant, koefNr) {
+	let counter = 0;
+	let asc = true;
+	for (i = 0; i < iQuantMatrix.length; i++) {
+		iQuantMatrix[i] = iTpQuant;
+	}
+	for (i = koefNr; i < iQuantMatrix.length - (koefNr + 1); i++) {
+		iQuantMatrix[i] = iHpQuant;
 	}
 }
 
-function quantMatrix(ifft2,ifft, iQuantMatrix,iRound)	{
-	for (i=0;i<iQuantMatrix.length;++i){
-			ifft2.real[i] = ifft.real[i];
-			ifft2.imag[i] = ifft.imag[i];
+function quantMatrix(ifft2, ifft, iQuantMatrix, iRound) {
+	for (i = 0; i < iQuantMatrix.length; ++i) {
+		ifft2.real[i] = runde(ifft.real[i] / iQuantMatrix[i], iRound);
+		ifft2.imag[i] = runde(ifft.imag[i] / iQuantMatrix[i], iRound);
 	}
 
 }
-	
-function invQuantMatrix( ifft2,ifft, iQuantMatrix,iRound)	{
-	for (i=0;i<iQuantMatrix.length;++i) {
-			ifft2.real[i] = ifft.real[i];
-			ifft2.imag[i] = ifft.imag[i];
+
+function invQuantMatrix(ifft2, ifft, iQuantMatrix, iRound) {
+	for (i = 0; i < iQuantMatrix.length; ++i) {
+		ifft2.real[i] = ifft.real[i] * iQuantMatrix[i];
+		ifft2.imag[i] = ifft.imag[i] * iQuantMatrix[i];
 	}
- } 
+}
  
 function processingAudioKompFFT(event) {  
 	var TPquant = parseFloat(document.getElementById("In1").value);

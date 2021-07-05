@@ -985,3 +985,203 @@ function processingAudio413() {
 function processingAudio414() {  
 
 }
+
+//////////////////
+///FFT Ue3 Nick///
+//////////////////
+
+function freqQuantMatrix(iQuantMatrix, iTpQuant, iHpQuant, koefNr) {
+	let counter = 0;
+	let asc = true;
+	for (i = 0; i < iQuantMatrix.length; i++) {
+		iQuantMatrix[i] = iTpQuant;
+	}
+	for (i = koefNr; i < iQuantMatrix.length - (koefNr - 1); i++) {
+		iQuantMatrix[i] = iHpQuant;
+	}
+}
+
+function maskFFT(iOutput, iInput, schwellwert) {
+	for (let i = 1; i < (iInput.length - 1) / 2; i++) {
+		iOutput[i] = iInput[i];
+		iOutput[iInput.length - i] = iInput[i];
+
+	}
+	//Setzt kleine Werte auf null
+	for (let i = 0; i < (iInput.length - 1); i++) {
+		//Check next
+		if (iInput[i] < (iInput[i + 1] - schwellwert)) {
+			iOutput[i] = 0
+		}
+		//checkprevious
+		if (iInput[i] < (iInput[i - 1] - schwellwert)) {
+			iOutput[i] = 0
+		}
+	}
+
+	iOutput[0] = iInput[0];
+	iOutput[(iInput.length / 2)] = iInput[(iInput.length / 2)]
+}
+
+function quantMatrix(ifft2, ifft, iQuantMatrix, iRound) {
+	for (i = 0; i < iQuantMatrix.length; ++i) {
+		ifft2.real[i] = runde(ifft.real[i] / iQuantMatrix[i], iRound);
+		ifft2.imag[i] = runde(ifft.imag[i] / iQuantMatrix[i], iRound);
+	}
+
+}
+
+function invQuantMatrix(ifft2, ifft, iQuantMatrix, iRound) {
+	for (i = 0; i < iQuantMatrix.length; ++i) {
+		ifft2.real[i] = ifft.real[i] * iQuantMatrix[i];
+		ifft2.imag[i] = ifft.imag[i] * iQuantMatrix[i];
+	}
+}
+const ctxAudioOptsMeas = {
+	textOffset: 25,
+	maxAmplitude: 1200,
+	maxDisplay: 180,
+	zeroPoint: 190,
+	step: 1.0
+}
+
+function processingAudio415(event) {
+	var TPquant = parseFloat(document.getElementById("In1").value);
+	var HPquant = parseFloat(document.getElementById("In2").value);
+	var splitFrequenz = parseFloat(document.getElementById("In3").value);
+
+	let SelChannel = (document.getElementById("In4").value);
+	let value1 = pegelFFTAudio(parseFloat(document.getElementById("In5").value));
+	let valueMask = pegel(parseFloat(document.getElementById("In6").value));
+
+	audArrayIn = readWebAudio(event);
+
+	let round = 5;
+
+	InitCanvas_Meas('customCanvas', 1024 * 2, 200);
+
+	freqQuantMatrix(QuantMatrixP, TPquant, HPquant, splitFrequenz);
+	StereoSelectOneChannel(monoSamples, audArrayIn, SelChannel);
+	//setAmplitude(GainSamples, monoSamples, volume);
+
+	FFTKoefP.forward(GainSamples);
+	quantMatrix(QuantFFTP, FFTKoefP, QuantMatrixP, round);
+	maskFFT(FFT2.real, FFTKoefP.real, 0.5);
+
+	ClearThresholdCounter = 0;
+	clearThresholdMaskStart(visuellEditFFTP, EditFFTP, QuantFFTP, valueMask, true);
+	clearThreshold2Start(visuellEditFFTP, EditFFTP2, EditFFTP, value1, false);
+	doFFTSpectrum(EditFFTP2);
+
+	invQuantMatrix(iQuantFFTP, EditFFTP2, QuantMatrixP, round);
+	iInverseFFTP = iQuantFFTP.inverse(iQuantFFTP.real, iQuantFFTP.imag);
+
+	clearCanvas_Meas(customCanvas);
+	fillCustomCanvasAudio_Meas1(EditFFTP2.spectrumLong, customCanvas, ctxAudioOptsMeas, TPquant, HPquant, splitFrequenz);
+
+	// Process chain end
+	writeWebAudio(event.outputBuffer, monoSamples);
+	LogArray = ["QuantMatrixP", "FFTKoefP.real", "FFT2.real", "QuantFFT.spectrumLong", "iQuantFFT.spectrumLong", "iInverseFFT", "ErrorLog"]; // Define Logging name of array object.
+}
+
+function pegelFFTAudio(wert) {
+	return ctxAudioOptsMeas.maxAmplitude * Math.pow(10, wert / 20);
+}
+
+function dbFFTAudio(wert) {
+	return 20 * Math.log(wert / ctxAudioOptsMeas.maxAmplitude) / Math.log(10);
+}
+
+function InitCanvas_Meas(canvasName, iW, iH) {
+	let iCustomCanvas = document.getElementById(canvasName); //changeCanvasName
+	iCustomCanvas.width = iW;
+	iCustomCanvas.height = iH;
+	mouseX = 421;
+	mouseY = 127;
+}
+
+function clearCanvas_Meas(canvas) {
+	canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+}
+let ClearThresholdCounter = 0;
+function clearThreshold2Start(iVisuellEditFFTP, iergFFT, idataFFT, value1, StartFlag) {
+	let islog = true;
+	let maxSpectrum = 1.0;
+	let altmaxSpectrum = idataFFT.imag[0];
+	idataFFT.imag[0] = 0;
+
+	for (let i = 0; i < idataFFT.real.length; i++) {
+		if (Math.abs(idataFFT.real[i]) >= value1 || Math.abs(idataFFT.imag[i]) >= value1) {
+			iergFFT.real[i] = idataFFT.real[i];
+			iergFFT.imag[i] = idataFFT.imag[i];
+			if (StartFlag == true) iVisuellEditFFTP[i].procID = 0;
+		} else {
+			iergFFT.real[i] = 0;
+			iergFFT.imag[i] = 0;
+			if (iVisuellEditFFTP[i].procID == 0) {
+				ClearThresholdCounter++;
+				iVisuellEditFFTP[i].procID = 1;
+				iVisuellEditFFTP[i].val = Math.abs(idataFFT.real[i]);
+				iVisuellEditFFTP[i].val2 = Math.abs(idataFFT.imag[i]);
+			}
+		}
+
+	}
+	//FFT.fftspectrum(iergFFT.spec, maxSpectrum, iergFFT.real, iergFFT.imag, islog);
+}
+
+function clearThresholdMaskStart(iVisuellEditFFTP, iergFFT, idataFFT, iValueMask, StartFlag) {
+	let islog = true;
+	let maxSpectrum = 1.0;
+	let altmaxSpectrum = idataFFT.imag[0];
+	idataFFT.imag[0] = 0;
+
+	for (let i = 0; i < idataFFT.real.length; i++) {
+		let left = Math.abs(idataFFT.real[i - 1]);
+		let right = Math.abs(idataFFT.real[i + 1]);
+		let akt = Math.abs(idataFFT.real[i]);
+		let left2 = Math.abs(idataFFT.imag[i - 1]);
+		let right2 = Math.abs(idataFFT.imag[i + 1]);
+		let akt2 = Math.abs(idataFFT.imag[i]);
+
+		if (akt < (right * iValueMask) || akt < (left * iValueMask) || akt2 < (right2 * iValueMask) || akt2 < (left2 * iValueMask)) {
+			iergFFT.real[i] = 0;
+			iergFFT.imag[i] = 0;
+			ClearThresholdCounter++;
+			iVisuellEditFFTP[i].procID = 2;
+			iVisuellEditFFTP[i].val = akt;
+			iVisuellEditFFTP[i].val2 = akt2;
+			iVisuellEditFFTP[i].l = left;
+			iVisuellEditFFTP[i].l2 = left2;
+			iVisuellEditFFTP[i].r = right;
+			iVisuellEditFFTP[i].r2 = right2;
+		} else {
+			iergFFT.real[i] = idataFFT.real[i]; //care absolute values
+			iergFFT.imag[i] = idataFFT.imag[i]; //care absolute values
+			if (StartFlag == true) iVisuellEditFFTP[i].procID = 0;
+		}
+	}
+	//FFT.fftspectrum(iergFFT.spec, maxSpectrum, iergFFT.real, iergFFT.imag, islog);
+}
+
+function fillCustomCanvasAudio_Meas1(origSample, canvas, options, compressedSample, error, enhance) {
+	let ctx = canvas.getContext("2d");
+	ctx.fillStyle = "#FFFFFF";
+	ctx.fillRect(300, 185, 10, 10);
+	for (var i = 0; i <= origSample.length + 1; i++) {
+		ii = i + 20;
+		ctx.fillRect(ii, 180 + (-origSample[i] * 100 * enhance), 2, 4);
+	}
+	ctx.fillStyle = "#0000FF";
+	ctx.fillRect(400, 185, 10, 10);
+	for (var i = 0; i <= compressedSample.length + 1; i++) {
+		ii = i + 20;
+		ctx.fillRect(ii, 180 + (-compressedSample[i] * 100 * enhance), 2, 1);
+	}
+	ctx.fillStyle = "#FF0000";
+	ctx.fillRect(500, 185, 10, 10);
+	for (var i = 0; i <= error.length + 1; i++) {
+		ii = i + 20;
+		ctx.fillRect(ii, 180 + (-error[i] * 100 * enhance), 2, 1);
+	}
+}

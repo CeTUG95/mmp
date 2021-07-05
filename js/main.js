@@ -21,7 +21,8 @@
 	var oneHz = new Array(254, 0, 0, 254, 254, 0, 0, 254, 254, 0, 0, 254, 254, 0, 0, 254 ) ;
 	var VideoTestArray  = new Array( 100, 100, 100, 255, 101, 101, 101, 255, 102, 102, 102, 255, 103, 103, 103, 255, 104, 104, 104, 255, 105, 105, 105, 255, 106, 106, 106, 255, 107, 107, 107, 255);
 	var AudioTestArray  = new Array( 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7);	
-	var oneHzAudio = new Array(1,0.42,-0.42,-1,-1,-0.42,0.42,1);
+	var oneHzAudio = new Array(1, 0.42, -0.42, -1, -1, -0.42, 0.42, 1);
+	var oneHzAudioImpulse = new Array(1, -1, 0, 0, 0, 0, 0, 0);
 	var display_fac = 128;  
 		var SAD, PSNR, MSE;
 
@@ -1176,7 +1177,15 @@ function mainPlayer(iProzess){
 			setImputFields("hidden","hidden","Quant-Faktor(1,2,4,8,16,..4096. , off: 66000): ","64", "hidden","hidden","HP-Quant-Faktor: ","1", "hidden","hidden","Grenzfreq.(Hz): ","1");
 			loadPlayer(audioPlayer, audioFile, picFile);		
 			break  
-
+		case "u110.12":
+			setMainAudioPlayer("Aud", 1, 1024 * 16, processingAudio415); //Übung 3.1
+			setImputFields("visible", "visible", "Quant-Faktor(1,2,4,8,16,..4096. , off: 66000): ", "64", "visible", "visible", "HP-Quant-Faktor: ", "1", "visible", "visible", "Grenzfreq.(1- 2Hz): ", "1");
+			setImputFields4("visible", "visible", "Sel Channel: ", "1")
+			setImputFields5("visible", "visible", "Value1: ", "1")
+			setImputFields6("visible", "visible", "Value Mask: ", "1")
+			//setImputFields("visible", "visible", "Quant-Faktor(1,2,4,8,16,.. 24 Bit. , off: 88888888): ", "1", "visible", "visible", "HP-Quant-Faktor: ", "1", "visible", "visible", "Grenzfreq.(1-2 Hz): ", "2");
+			loadPlayer(audioPlayer, audioFile, picFile);
+			break
  
 									  
 		  
