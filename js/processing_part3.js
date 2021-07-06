@@ -181,14 +181,24 @@ function setUpsampling(iOutput, iInput, idown_fac) {		//Downsampling
 }
 
 function setAHP1O1D(iOutput, iInput) {  
+	iOutput[0] = (iInput[0] / 2) * -1;
+	for(var i=1;i<iInput.length - 1;i++){
+		iOutput[i] = ((iInput[i-1] - iInput[i]) / 2) * -1;
+	}
 	// inverser hochpass --> unterlagen anschauen minus aktieller wert + vorgänger oder alles mal -1 vom hochpass 
 }
 
 function setMix(iOutput, iInput2, iInput1) {		//Mix
 	// Die beiden eingabewerte werden zusammengesmischt also addition 
+	for(var i = 0; i < iInput.length; i++){
+		iOutput[i] = iInput1[i] + iInput2[i];
+	}
 }
 
 function setDelay(iOutput, iInput,iDelaySamples) {		//Scale und shift
+	for(var i = 0; i < iInput.length; i++){
+		iOutput[i] = iInput[i+1];
+	}
 	// wenn array und an position 0 bis lenght um einen wert nach vorne verschoben 
 	// bei input array gehts bei 1 los bei output gehts bei 0 los 
  }
