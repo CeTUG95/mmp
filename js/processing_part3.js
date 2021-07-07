@@ -59,6 +59,11 @@ function setQuant(iOutput, iInput, iQuant, iRound)	{
 }
 
 function setIQuant(iOutput, iInput, iQuant)	{
+	iQuantMatrix = iInput;
+	for (var i = 0; i < iQuantMatrix.length; ++i) {
+        ifft2.real[i] = ifft.real[i] * iQuantMatrix[i];
+        ifft2.imag[i] = ifft.imag[i] * iQuantMatrix[i];
+    }
 }
 
 	
